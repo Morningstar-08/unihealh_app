@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_app/pages/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -116,13 +117,13 @@ class _LoginPageState extends State<LoginPage> {
                   const Text('Not registered yet?'),
                   TextButton(
                     onPressed: () {
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         const RegisterPage(title: 'Register UI'),
-                      //   ),
-                      // );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const SignUp(title: 'signup_page'),
+                        ),
+                      );
                     },
                     child: const Text('Create an account'),
                   ),
