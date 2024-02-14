@@ -17,8 +17,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _comfirmPasswordController =
       TextEditingController();
-  final TextEditingController _hostelController = TextEditingController();
-  final TextEditingController _roomNumberController = TextEditingController();
+  final TextEditingController _hostelRoomController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
@@ -32,7 +31,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('Student Registration'),
+        title: const Text('Back'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -98,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: 'New Password',
                     prefixIcon: const Icon(Icons.password_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -118,21 +117,10 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller: _hostelController,
+                  controller: _hostelRoomController,
                   decoration: InputDecoration(
-                    hintText: 'Hostel',
+                    hintText: 'Hostel Room Number',
                     prefixIcon: const Icon(Icons.home),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: _roomNumberController,
-                  decoration: InputDecoration(
-                    hintText: 'Room Number',
-                    prefixIcon: const Icon(Icons.room),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
