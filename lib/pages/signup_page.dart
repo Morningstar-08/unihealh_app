@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _passwordController,
                   decoration: InputDecoration(
                     hintText: 'Password',
-                    prefixIcon: Icon(Icons.password_rounded),
+                    prefixIcon: const Icon(Icons.password_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -110,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _comfirmPasswordController,
                   decoration: InputDecoration(
                     hintText: 'Confirm Password',
-                    prefixIcon: Icon(Icons.password_rounded),
+                    prefixIcon: const Icon(Icons.password_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
