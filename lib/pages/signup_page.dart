@@ -14,6 +14,9 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _comfirmPasswordController =
+      TextEditingController();
   final TextEditingController _hostelController = TextEditingController();
   final TextEditingController _roomNumberController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
@@ -29,7 +32,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text('Student Registration'),
+        title: Text('Back'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -86,6 +89,28 @@ class _SignUpState extends State<SignUp> {
                   decoration: InputDecoration(
                     hintText: 'Email',
                     prefixIcon: Icon(Icons.email),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    prefixIcon: Icon(Icons.password_rounded),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _comfirmPasswordController,
+                  decoration: InputDecoration(
+                    hintText: 'Confirm Password',
+                    prefixIcon: Icon(Icons.password_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
