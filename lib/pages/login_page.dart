@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_care_app/pages/signup_page.dart';
+import 'package:email_validator/email_validator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -44,9 +45,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextFormField(
                 controller: _usernameController,
-                // validator: (value) => EmailValidator.validate(value!)
-                //     ? null
-                //     : "Please enter a valid email",
+                validator: (value) => EmailValidator.validate(value!)
+                    ? null
+                    : "Please enter a valid email",
                 maxLines: 1,
                 decoration: InputDecoration(
                   hintText: 'Enter your email',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_care_app/pages/login_page.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key, required this.title});
@@ -85,6 +86,9 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _emailController,
+                  validator: (value) => EmailValidator.validate(value!)
+                      ? null
+                      : "Please enter a valid email",
                   decoration: InputDecoration(
                     hintText: 'Email',
                     prefixIcon: const Icon(Icons.email),
@@ -96,9 +100,17 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Enter a Password';
+                    }
+                    return null;
+                  },
+                  maxLines: 1,
+                  obscureText: true,
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'New Password',
-                    prefixIcon: const Icon(Icons.password_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -107,9 +119,20 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _comfirmPasswordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Passwords Don\'t Match';
+                    }
+                    if (value != _passwordController.text) {
+                      return 'Passwords Don\'t Match';
+                    }
+                    return null;
+                  },
+                  maxLines: 1,
+                  obscureText: true,
                   decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'Confirm Password',
-                    prefixIcon: const Icon(Icons.password_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
