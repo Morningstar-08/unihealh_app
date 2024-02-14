@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:health_care_app/pages/login_page.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key, required this.title}) : super(key: key);
+  const SignUp({super.key, required this.title});
   final String title;
   static const routeName = '/signup';
 
@@ -29,9 +29,9 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text('Student Registration'),
+        title: const Text('Student Registration'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(
               context,
@@ -63,7 +63,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _enrollmentController,
                   decoration: InputDecoration(
                     hintText: 'Enrollment Number',
-                    prefixIcon: Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -74,7 +74,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     hintText: 'Student Name',
-                    prefixIcon: Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -85,7 +85,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     hintText: 'Email',
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: const Icon(Icons.email),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -96,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _hostelController,
                   decoration: InputDecoration(
                     hintText: 'Hostel',
-                    prefixIcon: Icon(Icons.home),
+                    prefixIcon: const Icon(Icons.home),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -107,7 +107,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _roomNumberController,
                   decoration: InputDecoration(
                     hintText: 'Room Number',
-                    prefixIcon: Icon(Icons.room),
+                    prefixIcon: const Icon(Icons.room),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -119,7 +119,7 @@ class _SignUpState extends State<SignUp> {
                   readOnly: true,
                   decoration: InputDecoration(
                     hintText: 'Date of Birth',
-                    prefixIcon: Icon(Icons.calendar_today),
+                    prefixIcon: const Icon(Icons.calendar_today),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -143,7 +143,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _bloodGroupController,
                   decoration: InputDecoration(
                     hintText: 'Blood Group',
-                    prefixIcon: Icon(Icons.local_hospital),
+                    prefixIcon: const Icon(Icons.local_hospital),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -154,7 +154,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _heightController,
                   decoration: InputDecoration(
                     hintText: 'Height',
-                    prefixIcon: Icon(Icons.height),
+                    prefixIcon: const Icon(Icons.height),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -165,7 +165,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _weightController,
                   decoration: InputDecoration(
                     hintText: 'Weight',
-                    prefixIcon: Icon(Icons.fitness_center),
+                    prefixIcon: const Icon(Icons.fitness_center),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -176,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _allergiesController,
                   decoration: InputDecoration(
                     hintText: 'Allergies',
-                    prefixIcon: Icon(Icons.health_and_safety),
+                    prefixIcon: const Icon(Icons.health_and_safety),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -187,7 +187,7 @@ class _SignUpState extends State<SignUp> {
                   controller: _medicalRecordController,
                   decoration: InputDecoration(
                     hintText: 'Medical Record',
-                    prefixIcon: Icon(Icons.note),
+                    prefixIcon: const Icon(Icons.note),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
