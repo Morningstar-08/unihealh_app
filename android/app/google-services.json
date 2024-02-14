@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1067342925663",
+    "project_id": "unihealth-5cc4a",
+    "storage_bucket": "unihealth-5cc4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067342925663:android:7a90922280c2b9cfe570ea",
+        "android_client_info": {
+          "package_name": "com.example.health_care_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCakyrICUuk5wvABSmItdfuk4GhK8eegRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
