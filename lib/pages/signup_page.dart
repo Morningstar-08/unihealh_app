@@ -56,6 +56,26 @@ class _SignUpState extends State<SignUp> {
     print('Medical Record: $medicalRecord');
   }
 
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const LoginPage(title: 'login_page'),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,12 +85,13 @@ class _SignUpState extends State<SignUp> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginPage(title: 'login_page'),
-              ),
-            );
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const LoginPage(title: 'login_page'),
+            //   ),
+            // );
+            Navigator.of(context).push(_createRoute());
           },
         ),
       ),
