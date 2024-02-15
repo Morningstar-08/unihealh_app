@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import for TextInputType and TextInputFormatter
 import 'package:health_care_app/pages/login_page.dart';
 import 'package:email_validator/email_validator.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key, required this.title});
+  const SignUp({Key? key, required this.title}) : super(key: key);
   final String title;
   static const routeName = '/signup';
 
@@ -16,7 +17,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _comfirmPasswordController =
+  final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _hostelRoomController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
@@ -26,6 +27,34 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _allergiesController = TextEditingController();
   final TextEditingController _medicalRecordController =
       TextEditingController();
+
+  void _handleSignUp() {
+    final String enrollmentNumber = _enrollmentController.text;
+    final String studentName = _nameController.text;
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    final String hostelRoomNumber = _hostelRoomController.text;
+    final String dob = _dobController.text;
+    final String bloodGroup = _bloodGroupController.text;
+    final String height = _heightController.text;
+    final String weight = _weightController.text;
+    final String allergies = _allergiesController.text;
+    final String medicalRecord = _medicalRecordController.text;
+
+    print('Enrollment Number: $enrollmentNumber');
+    print('Student Name: $studentName');
+    print('Email: $email');
+    print('Password: $password');
+    print('Confirm Password: $confirmPassword');
+    print('Hostel Room Number: $hostelRoomNumber');
+    print('Date of Birth: $dob');
+    print('Blood Group: $bloodGroup');
+    print('Height: $height');
+    print('Weight: $weight');
+    print('Allergies: $allergies');
+    print('Medical Record: $medicalRecord');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +147,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller: _comfirmPasswordController,
+                  controller: _confirmPasswordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Passwords Don\'t Match';
@@ -169,7 +198,8 @@ class _SignUpState extends State<SignUp> {
                     );
                     if (pickedDate != null) {
                       setState(() {
-                        _dobController.text = pickedDate.toString();
+                        _dobController.text =
+                            pickedDate.toIso8601String().split('T')[0];
                       });
                     }
                   },
@@ -188,6 +218,8 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _heightController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     hintText: 'Height',
                     prefixIcon: const Icon(Icons.height),
@@ -199,6 +231,8 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _weightController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                     hintText: 'Weight',
                     prefixIcon: const Icon(Icons.fitness_center),
@@ -231,9 +265,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    // Handle sign-up logic here
-                  },
+                  onPressed: _handleSignUp,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                   ),
