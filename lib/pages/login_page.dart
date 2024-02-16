@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_app/features/authentication/firebase_authservice.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
 import 'package:health_care_app/pages/profile_page.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -14,8 +16,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _signIn() async {
+    String email = _usernameController.text;
+    String password = _passwordController.text;
+
+    User? user = await _auth.signInwithEmailAndPassword(email, password);
+    if (user != null) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const DashboardPage()));
+    } else {
+      print("Error signing in");
+    }
+  }
 
   @override
   void initState() {
@@ -117,10 +142,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfilePage()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => const Profile()));
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.fromLTRB(40, 25, 40, 15),
