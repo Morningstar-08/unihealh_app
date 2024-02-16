@@ -6,7 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key, required this.title}) : super(key: key);
+  const SignUp({super.key, required this.title});
   final String title;
   static const routeName = '/signup';
 

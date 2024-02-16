@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:health_care_app/features/authentication/firebase_authservice.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
 import 'package:health_care_app/pages/profile_page.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:health_care_app/features/authentication/firebase_authservice.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final FirebaseAuthService _auth = FirebaseAuthService();
+  // final FirebaseAuthService _auth = FirebaseAuthService();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -29,18 +29,18 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _signIn() async {
-    String email = _usernameController.text;
-    String password = _passwordController.text;
+  // void _signIn() async {
+  //   String email = _usernameController.text;
+  //   String password = _passwordController.text;
 
-    User? user = await _auth.signInwithEmailAndPassword(email, password);
-    if (user != null) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const DashboardPage()));
-    } else {
-      print("Error signing in");
-    }
-  }
+  //   User? user = await _auth.signInwithEmailAndPassword(email, password);
+  //   if (user != null) {
+  //     Navigator.pushReplacement(context,
+  //         MaterialPageRoute(builder: (context) => const DashboardPage()));
+  //   } else {
+  //     print("Error signing in");
+  //   }
+  // }
 
   @override
   void initState() {
@@ -123,15 +123,15 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DashboardPage()));
-                  // if (_formKey.currentState!.validate()) {
-                  //   _loginPressed(context);
-                  // }
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DashboardPage(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
                 child: const Text(
                   'Sign in',
@@ -140,13 +140,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => const Profile()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Profile(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(40, 25, 40, 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
                 child: const Text(
                   'Profile',
