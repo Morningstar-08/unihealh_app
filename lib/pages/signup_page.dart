@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import for TextInputType and TextInputFormatter
+import 'package:health_care_app/features/authentication/firebase_authservice.dart';
 import 'package:health_care_app/pages/login_page.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key, required this.title}) : super(key: key);
@@ -13,6 +15,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -28,7 +32,17 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _medicalRecordController =
       TextEditingController();
 
-  void _handleSignUp() {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _enrollmentController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+
+    super.dispose();
+  }
+
+  void _handleSignUp() async {
     final String enrollmentNumber = _enrollmentController.text;
     final String studentName = _nameController.text;
     final String email = _emailController.text;
@@ -41,6 +55,25 @@ class _SignUpState extends State<SignUp> {
     final String weight = _weightController.text;
     final String allergies = _allergiesController.text;
     final String medicalRecord = _medicalRecordController.text;
+
+    User? user = await _auth.signUpwithEmailAndPassword(
+        email,
+        password,
+        enrollmentNumber,
+        studentName,
+        hostelRoomNumber,
+        dob,
+        bloodGroup,
+        height,
+        weight,
+        allergies,
+        medicalRecord);
+
+    if (user != null) {
+      print("User successfully created");
+    } else {
+      print("Error occurred");
+    }
 
     print('Enrollment Number: $enrollmentNumber');
     print('Student Name: $studentName');
