@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_app/pages/dashboard_page.dart';
+import 'package:health_care_app/pages/profile_page.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -95,6 +97,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashboardPage()));
                   // if (_formKey.currentState!.validate()) {
                   //   _loginPressed(context);
                   // }
@@ -104,6 +110,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: const Text(
                   'Sign in',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilePage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.fromLTRB(40, 25, 40, 15),
+                ),
+                child: const Text(
+                  'Profile',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

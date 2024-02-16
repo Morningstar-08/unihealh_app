@@ -28,6 +28,16 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _medicalRecordController =
       TextEditingController();
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _enrollmentController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+
+    super.dispose();
+  }
+
   void _handleSignUp() {
     final String enrollmentNumber = _enrollmentController.text;
     final String studentName = _nameController.text;
