@@ -1,26 +1,34 @@
 import "package:flutter/material.dart";
 import "package:health_care_app/pages/login_page.dart";
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
-  // static const routeName = '/profile'
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
-  State<Profile> createState() => _ProfileState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfilePageState extends State<ProfilePage> {
+  final String profileImage =
+      'assets/toril.jpg'; // Use local asset path instead of external URL
+  final String name = 'Swastik';
+
+  // Replace placeholder data with actual user information from your data source
+  final String email = 'swastik@example.com';
+  final String dob = '1999-01-01';
+  final String height = '175 cm';
+  final String weight = '70 kg';
+  final String bloodGroup = 'O+';
+  final String allergies = 'Dust mites, Peanuts';
+  final String medicalHistory = 'None reported';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //backgroundColor: Colors.deepPurple[100],
-        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          // title: const Text('Back'),
-          centerTitle: true,
-          title: Text('Pronbhjfile',
-              style: Theme.of(context).textTheme.headlineMedium),
+          backgroundColor: const Color.fromARGB(255, 164, 144, 220),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
@@ -31,72 +39,89 @@ class _ProfileState extends State<Profile> {
             },
           ),
         ),
-        body: const SingleChildScrollView(
-            padding: EdgeInsets.all(20),
-            // margin: EdgeInsets.only(left: 20, bottom: 150, right: 20),
+        body: SingleChildScrollView(
+            // Use SingleChildScrollView for scrollable content
+            child: Column(children: [
+          Container(
+            color: const Color.fromARGB(255, 164, 144, 220),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Center(
-                        child: SizedBox(
-                          width: 120,
-                          height: 120,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('lib\\images\\profileImg.jpg'),
-                            radius: 60,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Student Name: Swastik',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Age: 19',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Hostel Room Number: 1234',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Blood Group: B+',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Height: 5\'10"',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Weight: 56 kg',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Allergies: None',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Medical Records: None',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
+                Center(
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(profileImage),
+                    radius: 60.0,
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Center(
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.0,
+                    ),
                   ),
                 ),
               ],
-            )));
+            ),
+          ),
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Email
+                ListTile(
+                  leading: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  title: Text(email),
+                  //  subtitle: const Text('Email Address'),
+                ),
+                // Date of Birth
+                ListTile(
+                  leading: const Icon(Icons.cake_outlined),
+                  title: Text(dob),
+                  //subtitle: const Text('Date of Birth'),
+                ),
+                // Height
+                ListTile(
+                  leading: const Icon(Icons.trending_up),
+                  title: Text(height),
+                  subtitle: const Text('Height'),
+                ),
+                // Weight
+                ListTile(
+                  leading: const Icon(Icons.balance),
+                  title: Text(weight),
+                  subtitle: const Text('Weight'),
+                ),
+                // // Blood Group
+                ListTile(
+                  leading: const Icon(Icons.bloodtype),
+                  title: Text(bloodGroup),
+                  subtitle: const Text('Blood Group'),
+                ),
+                // Allergies
+                ListTile(
+                  leading: const Icon(Icons.warning),
+                  title: Text(allergies),
+                  subtitle: const Text('Allergies'),
+                ),
+                // Medical History
+                ListTile(
+                  leading: const Icon(Icons.history),
+                  title: Text(medicalHistory),
+                  subtitle: const Text('Medical History'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20.0),
+        ])));
   }
 }
