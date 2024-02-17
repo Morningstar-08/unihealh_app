@@ -31,7 +31,7 @@ class FirebaseAuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      print("Success");
+      print("ERRORR");
     }
     return null;
   }

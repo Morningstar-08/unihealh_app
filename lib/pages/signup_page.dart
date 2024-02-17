@@ -6,7 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key, required this.title}) : super(key: key);
+  const SignUp({super.key, required this.title});
   final String title;
   static const routeName = '/signup';
 
@@ -15,8 +15,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final FirebaseAuthService _auth = FirebaseAuthService();
-
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -42,52 +40,52 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  void _handleSignUp() async {
-    final String enrollmentNumber = _enrollmentController.text;
-    final String studentName = _nameController.text;
-    final String email = _emailController.text;
-    final String password = _passwordController.text;
-    final String confirmPassword = _confirmPasswordController.text;
-    final String hostelRoomNumber = _hostelRoomController.text;
-    final String dob = _dobController.text;
-    final String bloodGroup = _bloodGroupController.text;
-    final String height = _heightController.text;
-    final String weight = _weightController.text;
-    final String allergies = _allergiesController.text;
-    final String medicalRecord = _medicalRecordController.text;
+  // void _handleSignUp() async {
+  //   final String enrollmentNumber = _enrollmentController.text;
+  //   final String studentName = _nameController.text;
+  //   final String email = _emailController.text;
+  //   final String password = _passwordController.text;
+  //   final String confirmPassword = _confirmPasswordController.text;
+  //   final String hostelRoomNumber = _hostelRoomController.text;
+  //   final String dob = _dobController.text;
+  //   final String bloodGroup = _bloodGroupController.text;
+  //   final String height = _heightController.text;
+  //   final String weight = _weightController.text;
+  //   final String allergies = _allergiesController.text;
+  //   final String medicalRecord = _medicalRecordController.text;
 
-    User? user = await _auth.signUpwithEmailAndPassword(
-        email,
-        password,
-        enrollmentNumber,
-        studentName,
-        hostelRoomNumber,
-        dob,
-        bloodGroup,
-        height,
-        weight,
-        allergies,
-        medicalRecord);
+  //   User? user = await _auth.signUpwithEmailAndPassword(
+  //       email,
+  //       password,
+  //       enrollmentNumber,
+  //       studentName,
+  //       hostelRoomNumber,
+  //       dob,
+  //       bloodGroup,
+  //       height,
+  //       weight,
+  //       allergies,
+  //       medicalRecord);
 
-    if (user != null) {
-      print("User successfully created");
-    } else {
-      print("Error occurred");
-    }
+  //   if (user != null) {
+  //     print("User successfully created");
+  //   } else {
+  //     print("Error occurred");
+  //   }
 
-    print('Enrollment Number: $enrollmentNumber');
-    print('Student Name: $studentName');
-    print('Email: $email');
-    print('Password: $password');
-    print('Confirm Password: $confirmPassword');
-    print('Hostel Room Number: $hostelRoomNumber');
-    print('Date of Birth: $dob');
-    print('Blood Group: $bloodGroup');
-    print('Height: $height');
-    print('Weight: $weight');
-    print('Allergies: $allergies');
-    print('Medical Record: $medicalRecord');
-  }
+  //   print('Enrollment Number: $enrollmentNumber');
+  //   print('Student Name: $studentName');
+  //   print('Email: $email');
+  //   print('Password: $password');
+  //   print('Confirm Password: $confirmPassword');
+  //   print('Hostel Room Number: $hostelRoomNumber');
+  //   print('Date of Birth: $dob');
+  //   print('Blood Group: $bloodGroup');
+  //   print('Height: $height');
+  //   print('Weight: $weight');
+  //   print('Allergies: $allergies');
+  //   print('Medical Record: $medicalRecord');
+  // }
 
   Route _createRoute() {
     return PageRouteBuilder(
@@ -319,7 +317,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _handleSignUp,
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                   ),

@@ -29,18 +29,36 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _signIn() async {
+  void signIn() async {
     String email = _usernameController.text;
     String password = _passwordController.text;
 
     User? user = await _auth.signInwithEmailAndPassword(email, password);
+
     if (user != null) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const DashboardPage()));
-    } else {
-      print("Error signing in");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Profile()));
     }
   }
+
+  // _signIn() async {
+  //   String email = _usernameController.text;
+  //   String password = _passwordController.text;
+
+  //   if (email == "" && password == "") {
+  //     print("Empty fields");
+  //   } else {
+  //     UserCredential? userCredential;
+  //     try {
+  //       userCredential = await FirebaseAuth.instance
+  //           .signInWithEmailAndPassword(email: email, password: password);
+  //       Navigator.push(
+  //           context, MaterialPageRoute(builder: (context) => const Profile()));
+  //     } on FirebaseAuthException catch (ex) {
+  //       print(ex.message);
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
@@ -122,13 +140,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DashboardPage()));
-                  // if (_formKey.currentState!.validate()) {
-                  //   _loginPressed(context);
-                  // }
+                  signIn();
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),

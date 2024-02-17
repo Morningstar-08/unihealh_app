@@ -78,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
         Tween<double>(begin: 1.0, end: 200.0).animate(_scale2Controller)
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
