@@ -11,10 +11,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final String profileImage =
       'assets/toril.jpg'; // Use local asset path instead of external URL
-  final String name = 'Swastik';
+  final String name = 'Toril Jain';
 
   // Replace placeholder data with actual user information from your data source
-  final String email = 'swastik@example.com';
+  final String email = 'toril@example.com';
   final String dob = '1999-01-01';
   final String height = '175 cm';
   final String weight = '70 kg';
@@ -27,8 +27,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 164, 144, 220),
+          // title: const Text('Back'),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pushReplacement(
                 context,
@@ -74,54 +75,50 @@ class _ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Email
-                ListTile(
-                  leading: const Icon(
-                    Icons.email_outlined,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  title: Text(email),
-                  //  subtitle: const Text('Email Address'),
+                ProfileList(text: email, icon: Icons.email_outlined),
+                ProfileList(text: dob, icon: Icons.cake_outlined),
+                ProfileList(text: height, icon: Icons.height_outlined),
+                ProfileList(text: weight, icon: Icons.fitness_center_outlined),
+                ProfileList(text: bloodGroup, icon: Icons.bloodtype_outlined),
+                ProfileList(
+                  text: allergies,
+                  icon: Icons.health_and_safety_outlined,
+                  isSubtitle: true,
+                  subtitle: 'Allergies',
                 ),
-                // Date of Birth
-                ListTile(
-                  leading: const Icon(Icons.cake_outlined),
-                  title: Text(dob),
-                  //subtitle: const Text('Date of Birth'),
-                ),
-                // Height
-                ListTile(
-                  leading: const Icon(Icons.trending_up),
-                  title: Text(height),
-                  subtitle: const Text('Height'),
-                ),
-                // Weight
-                ListTile(
-                  leading: const Icon(Icons.balance),
-                  title: Text(weight),
-                  subtitle: const Text('Weight'),
-                ),
-                // // Blood Group
-                ListTile(
-                  leading: const Icon(Icons.bloodtype),
-                  title: Text(bloodGroup),
-                  subtitle: const Text('Blood Group'),
-                ),
-                // Allergies
-                ListTile(
-                  leading: const Icon(Icons.warning),
-                  title: Text(allergies),
-                  subtitle: const Text('Allergies'),
-                ),
-                // Medical History
-                ListTile(
-                  leading: const Icon(Icons.history),
-                  title: Text(medicalHistory),
-                  subtitle: const Text('Medical History'),
-                ),
+                ProfileList(
+                    text: medicalHistory,
+                    icon: Icons.history_outlined,
+                    isSubtitle: true,
+                    subtitle: 'Medical History'),
               ],
             ),
           ),
-          const SizedBox(height: 20.0),
+          // const SizedBox(height: 20.0),
         ])));
+  }
+}
+
+class ProfileList extends StatelessWidget {
+  const ProfileList(
+      {super.key,
+      required this.text,
+      required this.icon,
+      this.isSubtitle = false,
+      this.subtitle = ''});
+
+  final String text;
+  final IconData icon;
+  final bool isSubtitle;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.deepPurpleAccent),
+      title: Text(text),
+      subtitle: isSubtitle ? Text(subtitle) : null,
+      //  subtitle: const Text('Email Address'),
+    );
   }
 }
