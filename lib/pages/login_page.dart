@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:health_care_app/features/authentication/firebase_authservice.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
 import 'package:health_care_app/pages/profile_page.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:health_care_app/features/authentication/firebase_authservice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,17 +29,31 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void signIn() async {
+  signIn() async {
     String email = _usernameController.text;
     String password = _passwordController.text;
 
     User? user = await _auth.signInwithEmailAndPassword(email, password);
 
     if (user != null) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Profile()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const DashboardPage()));
+    } else {
+      print("Error signing in");
     }
   }
+  // void _signIn() async {
+  //   String email = _usernameController.text;
+  //   String password = _passwordController.text;
+
+  //   User? user = await _auth.signInwithEmailAndPassword(email, password);
+  //   if (user != null) {
+  //     Navigator.pushReplacement(context,
+  //         MaterialPageRoute(builder: (context) => const DashboardPage()));
+  //   } else {
+  //     print("Error signing in");
+  //   }
+  // }
 
   // _signIn() async {
   //   String email = _usernameController.text;
@@ -139,11 +153,14 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed:
+                    // _signIn,
+                    () {
                   signIn();
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
                 child: const Text(
                   'Sign in',
@@ -152,13 +169,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => const Profile()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Profile(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(40, 25, 40, 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
                 child: const Text(
                   'Profile',
