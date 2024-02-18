@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import "package:health_care_app/pages/login_page.dart";
+  
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
@@ -29,7 +30,17 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Health Dashboard'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(title: 'login_page'),
+              ),
+            );
+          },
+        ),
       ),
       body: Stack(
         children: [
