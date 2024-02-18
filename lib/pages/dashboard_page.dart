@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import "package:health_care_app/pages/login_page.dart";
   
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -26,6 +26,18 @@ class _DashboardPageState extends State<DashboardPage> {
     // Add more records here
   ];
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  bool ongoingValue = false;
+  bool doctorRepliedValue = false;
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    dateController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,27 +54,98 @@ class _DashboardPageState extends State<DashboardPage> {
           },
         ),
       ),
-      body: Stack(
-        children: [
-          // Scrollable list of medical records
-          ListView.builder(
-            padding: const EdgeInsets.all(20.0),
-            itemCount: records.length,
-            itemBuilder: (context, index) =>
-                MedicalRecordCard(record: records[index]),
-          ),
-          // Fixed-position "Add" button
-          Positioned(
-            bottom: 20.0,
-            right: 20.0,
-            child: FloatingActionButton(
-              onPressed: () {
-                // Handle "Add" button press (e.g., navigate to create new record page)
-              },
-              child: const Icon(Icons.add),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Create New Medical Record',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+            const SizedBox(height: 20.0),
+            TextFormField(
+              controller: titleController,
+              decoration: const InputDecoration(labelText: 'Title'),
+            ),
+            const SizedBox(height: 20.0),
+            TextFormField(
+              controller: dateController,
+              decoration: const InputDecoration(labelText: 'Date'),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime.now(),
+                );
+                if (pickedDate != null) {
+                  dateController.text = pickedDate.toString();
+                }
+              },
+            ),
+            const SizedBox(height: 20.0),
+            Row(
+              children: [
+                const Text('Ongoing: '),
+                Checkbox(
+                  value: ongoingValue,
+                  onChanged: (value) {
+                    setState(() {
+                      ongoingValue = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Text('Doctor Replied: '),
+                Checkbox(
+                  value: doctorRepliedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      doctorRepliedValue = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Create new medical record with entered data
+                MedicalRecord newRecord = MedicalRecord(
+                  title: titleController.text,
+                  date: DateTime.parse(dateController.text),
+                  ongoing: ongoingValue,
+                  doctorReplied: doctorRepliedValue,
+                );
+                setState(() {
+                  records.add(newRecord);
+                });
+                // Clear text fields after adding record
+                titleController.clear();
+                dateController.clear();
+                ongoingValue = false;
+                doctorRepliedValue = false;
+              },
+              child: const Text('Add Medical Record'),
+            ),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Medical Records:',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: records.length,
+              itemBuilder: (context, index) {
+                return MedicalRecordCard(record: records[index]);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -85,7 +168,7 @@ class MedicalRecord {
 class MedicalRecordCard extends StatelessWidget {
   final MedicalRecord record;
 
-  const MedicalRecordCard({super.key, required this.record});
+  const MedicalRecordCard({Key? key, required this.record}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,46 +177,34 @@ class MedicalRecordCard extends StatelessWidget {
       margin: const EdgeInsets.all(8.0),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    record.title,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: record.ongoing ? Colors.green : Colors.grey[600],
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  //   Text(
-                  //     DateFormat('MMM dd, yyyy').format(record.date),
-                  //     style: TextStyle(color: Colors.grey[600]),
-                  //   ),
-                ],
-              ),
+            Text(
+              'Title: ${record.title}',
+              style: const TextStyle(fontSize: 16.0),
             ),
-            const SizedBox(width: 10.0),
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: record.doctorReplied ? Colors.blue : Colors.grey[200],
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 12.0,
-                ),
-              ),
+            Text(
+              'Date: ${record.date.day}/${record.date.month}/${record.date.year}',
+              style: const TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Ongoing: ${record.ongoing ? 'Yes' : 'No'}',
+              style: const TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Doctor Replied: ${record.doctorReplied ? 'Yes' : 'No'}',
+              style: const TextStyle(fontSize: 16.0),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: DashboardPage(),
+  ));
 }
