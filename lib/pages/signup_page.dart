@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Import for TextInputType and TextInputFormatter
 import 'package:health_care_app/features/authentication/firebase_authservice.dart';
+import 'package:health_care_app/features/database/database_service.dart';
+import 'package:health_care_app/modals/student_modal.dart';
 import 'package:health_care_app/pages/login_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,52 +42,53 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
-  // void _handleSignUp() async {
-  //   final String enrollmentNumber = _enrollmentController.text;
-  //   final String studentName = _nameController.text;
-  //   final String email = _emailController.text;
-  //   final String password = _passwordController.text;
-  //   final String confirmPassword = _confirmPasswordController.text;
-  //   final String hostelRoomNumber = _hostelRoomController.text;
-  //   final String dob = _dobController.text;
-  //   final String bloodGroup = _bloodGroupController.text;
-  //   final String height = _heightController.text;
-  //   final String weight = _weightController.text;
-  //   final String allergies = _allergiesController.text;
-  //   final String medicalRecord = _medicalRecordController.text;
+  void _handleSignUp() async {
+    final FirebaseAuthService _auth = FirebaseAuthService();
 
-  //   User? user = await _auth.signUpwithEmailAndPassword(
-  //       email,
-  //       password,
-  //       enrollmentNumber,
-  //       studentName,
-  //       hostelRoomNumber,
-  //       dob,
-  //       bloodGroup,
-  //       height,
-  //       weight,
-  //       allergies,
-  //       medicalRecord);
+    final String enrollmentNumber = _enrollmentController.text;
+    final String studentName = _nameController.text;
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    final String hostelRoomNumber = _hostelRoomController.text;
+    final String dob = _dobController.text;
+    final String bloodGroup = _bloodGroupController.text;
+    final String height = _heightController.text;
+    final String weight = _weightController.text;
+    final String allergies = _allergiesController.text;
+    final String medicalRecord = _medicalRecordController.text;
 
-  //   if (user != null) {
-  //     print("User successfully created");
-  //   } else {
-  //     print("Error occurred");
-  //   }
+    User? user = await _auth.signUpwithEmailAndPassword(
+      email,
+      password,
+    );
 
-  //   print('Enrollment Number: $enrollmentNumber');
-  //   print('Student Name: $studentName');
-  //   print('Email: $email');
-  //   print('Password: $password');
-  //   print('Confirm Password: $confirmPassword');
-  //   print('Hostel Room Number: $hostelRoomNumber');
-  //   print('Date of Birth: $dob');
-  //   print('Blood Group: $bloodGroup');
-  //   print('Height: $height');
-  //   print('Weight: $weight');
-  //   print('Allergies: $allergies');
-  //   print('Medical Record: $medicalRecord');
-  // }
+    if (user != null) {
+      StudentModal studentMap = StudentModal(
+        email: email,
+        enrollmentNo: enrollmentNumber,
+        name: studentName,
+        profile: {
+          'allergies': allergies,
+          'bloodGroup': bloodGroup,
+          'dob': dob,
+          'height': height,
+          'medicalRecord': medicalRecord,
+          'weight': weight,
+        },
+        hostel: 'hostel',
+        roomNo: int.parse(hostelRoomNumber),
+      );
+      await DatabaseService().addStudent(studentMap, enrollmentNumber);
+      print("User successfully created");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const LoginPage(title: 'login_page')));
+    } else {
+      print("Error occurred");
+    }
+  }
 
   Route _createRoute() {
     return PageRouteBuilder(
@@ -116,12 +119,6 @@ class _SignUpState extends State<SignUp> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const LoginPage(title: 'login_page'),
-            //   ),
-            // );
             Navigator.of(context).push(_createRoute());
           },
         ),
@@ -317,7 +314,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _handleSignUp,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                   ),

@@ -153,11 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed:
-                    // _signIn,
-                    () {
-                  signIn();
-                },
+                onPressed: signIn,
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
