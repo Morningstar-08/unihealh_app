@@ -11,9 +11,10 @@ class DatabaseService {
         .set(studentMap.toJson());
   }
 
-  Future<Stream<QuerySnapshot>> getStudentsDetails() async {
+  Future<QuerySnapshot> getStudentsDetails(String email) async {
     return await FirebaseFirestore.instance
         .collection(STUDENT_COLLECTION_REF)
-        .snapshots();
+        .where("email", isEqualTo: email)
+        .get();
   }
 }
