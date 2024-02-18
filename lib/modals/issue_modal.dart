@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class IssueModal {
-  DateTime timestamp;
+  Timestamp timestamp;
   String issueDesc;
   String issueTitle;
   bool status;
@@ -15,7 +17,7 @@ class IssueModal {
 
   IssueModal.fromJson(Map<String, dynamic> json)
       : this(
-            timestamp: json['TIMESTAMP']! as DateTime,
+            timestamp: json['TIMESTAMP']! as Timestamp,
             issueDesc: json['issueDesc']! as String,
             issueTitle: json['issueTitle']! as String,
             // profile: Map<String, dynamic>.from(json['profile'] ?? {}),
