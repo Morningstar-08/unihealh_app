@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
+import 'package:health_care_app/pages/doctor_dashboard.dart';
 import 'package:health_care_app/pages/profile_page.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
@@ -187,6 +188,29 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: const Text(
                     'Profile',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DoctorDashboard(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
+                  ),
+                  child: const Text(
+                    'Doctor Dashboard',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
