@@ -12,11 +12,20 @@ class DatabaseService {
         .set(studentMap.toJson());
   }
 
-  getStudentsDetails() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance
+  // Future<QuerySnapshot> getStudentsDetails() async {
+  //   String? uid = FirebaseAuth.instance.currentUser!.email;
+  //   return await FirebaseFirestore.instance
+  //       .collection(STUDENT_COLLECTION_REF)
+  //       .where("email", isEqualTo: uid)
+  //       .get();
+  // }
+
+  Future<QuerySnapshot> getStudents() async {
+    String? uid = FirebaseAuth.instance.currentUser!.email;
+    print(uid);
+    return FirebaseFirestore.instance
         .collection(STUDENT_COLLECTION_REF)
-        .doc(uid)
-        .snapshots();
+        .where("email", isEqualTo: uid)
+        .get();
   }
 }

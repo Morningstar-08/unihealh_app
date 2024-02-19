@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (user != null) {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const DashboardPage()));
+          MaterialPageRoute(builder: (context) => const ProfilePage()));
     } else {
       print("Error signing in");
     }

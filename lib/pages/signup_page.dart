@@ -38,7 +38,6 @@ class _SignUpState extends State<SignUp> {
     _enrollmentController.dispose();
     _nameController.dispose();
     _emailController.dispose();
-
     super.dispose();
   }
 
@@ -49,7 +48,6 @@ class _SignUpState extends State<SignUp> {
     final String studentName = _nameController.text;
     final String email = _emailController.text;
     final String password = _passwordController.text;
-    final String confirmPassword = _confirmPasswordController.text;
     final String hostelRoomNumber = _hostelRoomController.text;
     final String dob = _dobController.text;
     final String bloodGroup = _bloodGroupController.text;
