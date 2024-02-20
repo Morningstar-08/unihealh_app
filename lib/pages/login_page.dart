@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_service.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
@@ -26,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -49,54 +47,10 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         print("Error signing in");
       }
-      // DatabaseService().getUserType().then((value) {
-      //   if (value == "student") {
-      //     Navigator.pushReplacement(context,
-      //         MaterialPageRoute(builder: (context) => const DashboardPage()));
-      //   } else if (value == "doctor") {
-      //     Navigator.pushReplacement(context,
-      //         MaterialPageRoute(builder: (context) => const DoctorDashboard()));
-      //   } else {
-      //     print("Error signing in");
-      //   }
-      // });
-      // Navigator.pushReplacement(context,
-      //     MaterialPageRoute(builder: (context) => const DashboardPage()));
     } else {
       print("Error signing in");
     }
   }
-  // void _signIn() async {
-  //   String email = _usernameController.text;
-  //   String password = _passwordController.text;
-
-  //   User? user = await _auth.signInwithEmailAndPassword(email, password);
-  //   if (user != null) {
-  //     Navigator.pushReplacement(context,
-  //         MaterialPageRoute(builder: (context) => const DashboardPage()));
-  //   } else {
-  //     print("Error signing in");
-  //   }
-  // }
-
-  // _signIn() async {
-  //   String email = _usernameController.text;
-  //   String password = _passwordController.text;
-
-  //   if (email == "" && password == "") {
-  //     print("Empty fields");
-  //   } else {
-  //     UserCredential? userCredential;
-  //     try {
-  //       userCredential = await FirebaseAuth.instance
-  //           .signInWithEmailAndPassword(email: email, password: password);
-  //       Navigator.push(
-  //           context, MaterialPageRoute(builder: (context) => const Profile()));
-  //     } on FirebaseAuthException catch (ex) {
-  //       print(ex.message);
-  //     }
-  //   }
-  // }
 
   @override
   void initState() {

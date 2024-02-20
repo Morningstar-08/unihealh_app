@@ -1,20 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:health_care_app/modals/issue_modal.dart';
 
 const String ISSUE_COLLECTION_REF = 'issues';
 
 class DatabaseService {
-  Future addStudent(IssueModal studentMap, String id) async {
+  Future addIssue(IssueModal issueMap, String id) async {
     return await FirebaseFirestore.instance
         .collection(ISSUE_COLLECTION_REF)
         .doc(id)
-        .set(studentMap.toJson());
+        .set(issueMap.toJson());
   }
 
-  Future<QuerySnapshot> getStudentsDetails(String email) async {
-    return await FirebaseFirestore.instance
+  Future<QuerySnapshot?> getIssueDetails() async {
+    String? uid = FirebaseAuth.instance.currentUser!.email;
+    return FirebaseFirestore.instance
         .collection(ISSUE_COLLECTION_REF)
-        .where("email", isEqualTo: email)
+        .where("studentid", isEqualTo: uid)
         .get();
   }
 }

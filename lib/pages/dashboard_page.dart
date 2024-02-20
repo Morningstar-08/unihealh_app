@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_care_app/pages/login_page.dart';
+import 'package:health_care_app/pages/profile_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -49,6 +50,23 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard'),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    Icons.person_2_outlined,
+                    size: 26.0,
+                  )))
+        ],
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(20.0),
@@ -189,8 +207,7 @@ class _MedicalRecordCardState extends State<MedicalRecordCard> {
 class MedicalRecordDetails extends StatelessWidget {
   final MedicalRecord record;
 
-  const MedicalRecordDetails({Key? key, required this.record})
-      : super(key: key);
+  const MedicalRecordDetails({super.key, required this.record});
 
   @override
   Widget build(BuildContext context) {

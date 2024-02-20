@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
+import "package:health_care_app/pages/dashboard_page.dart";
 import "package:health_care_app/pages/login_page.dart";
 import 'package:health_care_app/features/database/database_service.dart';
 
@@ -42,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const LoginPage(title: 'login_page'),
+                builder: (context) => const DashboardPage(),
               ),
             );
           },
@@ -160,6 +161,30 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const LoginPage(title: "Login Page"),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 15),
+                        ),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               );
