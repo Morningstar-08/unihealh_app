@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 
 class DoctorDashboard extends StatefulWidget {
   const DoctorDashboard({Key? key}) : super(key: key);
@@ -23,7 +22,6 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
       ongoing: false,
       doctorReplied: false,
     ),
-    // Add more records here
   ];
 
   @override
