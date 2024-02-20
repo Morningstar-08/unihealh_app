@@ -16,12 +16,12 @@ class DatabaseService {
     String? uid = FirebaseAuth.instance.currentUser!.email;
 
     QuerySnapshot studentSnapshot = await FirebaseFirestore.instance
-        .collection('student')
+        .collection('students')
         .where("email", isEqualTo: uid)
         .get();
 
     QuerySnapshot doctorSnapshot = await FirebaseFirestore.instance
-        .collection('doctor')
+        .collection('doctors')
         .where("email", isEqualTo: uid)
         .get();
 
