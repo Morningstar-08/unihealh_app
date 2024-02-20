@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_app/features/database/database_service.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
 import 'package:health_care_app/pages/doctor_dashboard.dart';
 import 'package:health_care_app/pages/profile_page.dart';
@@ -37,8 +38,20 @@ class _LoginPageState extends State<LoginPage> {
     User? user = await _auth.signInwithEmailAndPassword(email, password);
 
     if (user != null) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const ProfilePage()));
+      print(DatabaseService().getUserType());
+      DatabaseService().getUserType().then((value) {
+        if (value == "student") {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const DashboardPage()));
+        } else if (value == "doctor") {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const DoctorDashboard()));
+        } else {
+          print("Error signing in");
+        }
+      });
+      // Navigator.pushReplacement(context,
+      //     MaterialPageRoute(builder: (context) => const DashboardPage()));
     } else {
       print("Error signing in");
     }

@@ -12,17 +12,30 @@ class DatabaseService {
         .set(studentMap.toJson());
   }
 
-  // Future<QuerySnapshot> getStudentsDetails() async {
-  //   String? uid = FirebaseAuth.instance.currentUser!.email;
-  //   return await FirebaseFirestore.instance
-  //       .collection(STUDENT_COLLECTION_REF)
-  //       .where("email", isEqualTo: uid)
-  //       .get();
-  // }
+  Future<String?> getUserType() async {
+    String? uid = FirebaseAuth.instance.currentUser!.email;
+
+    QuerySnapshot studentSnapshot = await FirebaseFirestore.instance
+        .collection('student')
+        .where("email", isEqualTo: uid)
+        .get();
+
+    QuerySnapshot doctorSnapshot = await FirebaseFirestore.instance
+        .collection('doctor')
+        .where("email", isEqualTo: uid)
+        .get();
+
+    if (studentSnapshot.docs.isNotEmpty) {
+      return studentSnapshot.docs[0]["userType"];
+    } else if (doctorSnapshot.docs.isNotEmpty) {
+      return doctorSnapshot.docs[0]["userType"];
+    } else {
+      return null;
+    }
+  }
 
   Future<QuerySnapshot> getStudents() async {
     String? uid = FirebaseAuth.instance.currentUser!.email;
-    print(uid);
     return FirebaseFirestore.instance
         .collection(STUDENT_COLLECTION_REF)
         .where("email", isEqualTo: uid)
