@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
         future: _studentFuture,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
@@ -61,7 +61,6 @@ class _ProfilePageState extends State<ProfilePage> {
               var data = snapshot.data!.docs[0];
 
               String name = data['name'] ?? '';
-              print(name);
               String email = data['email'] ?? '';
               String dob = data['profile']['dob'] ?? '';
               String hostelNumber = data['hostel'] ?? '';
@@ -189,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               );
             } else {
-              return Center(child: Text('No data available'));
+              return const Center(child: Text('No data available'));
             }
           }
         },
