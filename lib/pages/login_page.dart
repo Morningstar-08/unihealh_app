@@ -57,6 +57,8 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(20),
         child: Form(
           //key: _formKey,
-          autovalidateMode: AutovalidateMode.always,
+          autovalidateMode: _autovalidateMode,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +137,12 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 ElevatedButton(
-                  onPressed: signIn,
+                  onPressed: () {
+                    setState(() {
+                      _autovalidateMode = AutovalidateMode.always;
+                    });
+                    signIn();
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 40, vertical: 15),

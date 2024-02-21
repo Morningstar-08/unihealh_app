@@ -17,13 +17,25 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String _selectedBloodGroup = 'A+';
+  final List<String> _bloodGroups = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+    'O+',
+    'O-',
+  ];
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _hostelRoomController = TextEditingController();
+  final TextEditingController _hostelNameController = TextEditingController();
+  final TextEditingController _roomNumberController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
@@ -48,7 +60,8 @@ class _SignUpState extends State<SignUp> {
     final String studentName = _nameController.text;
     final String email = _emailController.text;
     final String password = _passwordController.text;
-    final String hostelRoomNumber = _hostelRoomController.text;
+    final String hostelName = _hostelNameController.text;
+    final String roomNumber = _roomNumberController.text;
     final String dob = _dobController.text;
     final String bloodGroup = _bloodGroupController.text;
     final String height = _heightController.text;
@@ -74,8 +87,8 @@ class _SignUpState extends State<SignUp> {
           'medicalRecord': medicalRecord,
           'weight': weight,
         },
-        hostel: 'hostel',
-        roomNo: int.parse(hostelRoomNumber),
+        hostel: hostelName.toString(),
+        roomNo: int.parse(roomNumber),
       );
       await DatabaseService().addStudent(studentMap, enrollmentNumber);
       print("User successfully created");
@@ -108,6 +121,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,7 +139,7 @@ class _SignUpState extends State<SignUp> {
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Form(
-          autovalidateMode: AutovalidateMode.always,
+          autovalidateMode: _autovalidateMode,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -215,15 +230,40 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: _hostelRoomController,
-                  decoration: InputDecoration(
-                    hintText: 'Hostel Room Number',
-                    prefixIcon: const Icon(Icons.home),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: TextFormField(
+                          controller: _hostelNameController,
+                          decoration: InputDecoration(
+                            hintText: 'Hostel Name',
+                            prefixIcon: const Icon(Icons.home),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: TextFormField(
+                          controller: _roomNumberController,
+                          decoration: InputDecoration(
+                            hintText: 'Room Number',
+                            prefixIcon: const Icon(Icons.home),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -252,8 +292,19 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: _bloodGroupController,
+                DropdownButtonFormField<String>(
+                  value: _selectedBloodGroup,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedBloodGroup = newValue!;
+                    });
+                  },
+                  items: _bloodGroups.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                   decoration: InputDecoration(
                     hintText: 'Blood Group',
                     prefixIcon: const Icon(Icons.local_hospital),
@@ -268,7 +319,7 @@ class _SignUpState extends State<SignUp> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    hintText: 'Height',
+                    hintText: 'Height (in cm)',
                     prefixIcon: const Icon(Icons.height),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -281,7 +332,7 @@ class _SignUpState extends State<SignUp> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    hintText: 'Weight',
+                    hintText: 'Weight (in kg)',
                     prefixIcon: const Icon(Icons.fitness_center),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -312,7 +363,12 @@ class _SignUpState extends State<SignUp> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _handleSignUp,
+                  onPressed: () {
+                    setState(() {
+                      _autovalidateMode = AutovalidateMode.always;
+                    });
+                    _handleSignUp();
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                   ),
