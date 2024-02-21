@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:health_care_app/pages/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _widthController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 300),
     );
 
     _widthAnimation =
@@ -110,21 +110,20 @@ class _SplashScreenState extends State<SplashScreen>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              for (int i = -150; i <= -50; i += 50)
-                Positioned(
-                  top: i.toDouble(),
-                  left: 0,
-                  child: Container(
-                    width: width,
-                    height: 400,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/underwater.jpg'),
-                        fit: BoxFit.cover,
-                      ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  width: width,
+                  height: 400,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/unihealth.png'),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
+              ),
               Container(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(

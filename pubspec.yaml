@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.17.4
   email_validator: '^2.1.16'
   page_transition: ^2.1.0
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +64,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/underwater.jpg
+    - assets/images/unihealth.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

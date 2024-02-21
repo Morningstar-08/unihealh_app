@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import for TextInputType and TextInputFormatter
+import 'package:flutter/services.dart';
 import 'package:health_care_app/features/authentication/firebase_authservice.dart';
 import 'package:health_care_app/features/database/database_service.dart';
 import 'package:health_care_app/modals/student_modal.dart';
 import 'package:health_care_app/pages/login_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key, required this.title});
@@ -17,8 +18,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String _selectedBloodGroup = 'A+';
-  final List<String> _bloodGroups = [
+  String? _selectedBloodGroup = null;
+  final List<String?> _bloodGroups = [
+    null,
     'A+',
     'A-',
     'B+',
@@ -28,6 +30,7 @@ class _SignUpState extends State<SignUp> {
     'O+',
     'O-',
   ];
+
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -91,13 +94,29 @@ class _SignUpState extends State<SignUp> {
         roomNo: int.parse(roomNumber),
       );
       await DatabaseService().addStudent(studentMap, enrollmentNumber);
-      print("User successfully created");
+      Fluttertoast.showToast(
+        msg: "User successfully created",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => const LoginPage(title: 'login_page')));
     } else {
-      print("Error occurred");
+      Fluttertoast.showToast(
+        msg: "Error creating user, please try again",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
@@ -155,6 +174,12 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _enrollmentController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Required';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: 'Enrollment Number',
                     prefixIcon: const Icon(Icons.person),
@@ -166,6 +191,12 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _nameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Required';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText: 'Student Name',
                     prefixIcon: const Icon(Icons.person),
@@ -238,6 +269,12 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.only(right: 10.0),
                         child: TextFormField(
                           controller: _hostelNameController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '*Required';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Hostel Name',
                             prefixIcon: const Icon(Icons.home),
@@ -253,6 +290,12 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.only(left: 10.0),
                         child: TextFormField(
                           controller: _roomNumberController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '*Required';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
                             hintText: 'Room Number',
                             prefixIcon: const Icon(Icons.home),
@@ -268,6 +311,12 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _dobController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Required';
+                    }
+                    return null;
+                  },
                   readOnly: true,
                   decoration: InputDecoration(
                     hintText: 'Date of Birth',
@@ -292,17 +341,17 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 const SizedBox(height: 20),
-                DropdownButtonFormField<String>(
+                DropdownButtonFormField<String?>(
                   value: _selectedBloodGroup,
                   onChanged: (String? newValue) {
                     setState(() {
                       _selectedBloodGroup = newValue!;
                     });
                   },
-                  items: _bloodGroups.map((String value) {
-                    return DropdownMenuItem<String>(
+                  items: _bloodGroups.map((String? value) {
+                    return DropdownMenuItem<String?>(
                       value: value,
-                      child: Text(value),
+                      child: Text(value ?? 'Blood Group'),
                     );
                   }).toList(),
                   decoration: InputDecoration(
@@ -316,6 +365,12 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _heightController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Required';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
@@ -329,6 +384,12 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _weightController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Required';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
