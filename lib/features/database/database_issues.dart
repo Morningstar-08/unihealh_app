@@ -4,7 +4,7 @@ import 'package:health_care_app/modals/issue_modal.dart';
 
 const String ISSUE_COLLECTION_REF = 'issues';
 
-class DatabaseService {
+class DatabaseServiceIssues {
   Future addIssue(IssueModal issueMap, String id) async {
     return await FirebaseFirestore.instance
         .collection(ISSUE_COLLECTION_REF)

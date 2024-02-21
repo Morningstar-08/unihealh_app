@@ -347,3 +347,160 @@ class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
     );
   }
 }
+
+
+//   final List<MedicalRecord> records = [
+//     // Replace with actual medical record data
+//     MedicalRecord(
+//       title: 'Headache',
+//       date: DateTime.now(),
+//       ongoing: true,
+//       doctorReplied: true,
+//     ),
+//     MedicalRecord(
+//       title: 'Stomach Ache',
+//       date: DateTime.now().subtract(const Duration(days: 5)),
+//       ongoing: false,
+//       doctorReplied: false,
+//     ),
+//   ];
+// }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Dashboard'),
+//         actions: <Widget>[
+//           Padding(
+//               padding: EdgeInsets.only(right: 20.0),
+//               child: GestureDetector(
+//                   onTap: () {
+//                     Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => const ProfilePage(),
+//                       ),
+//                     );
+//                   },
+//                   child: Icon(
+//                     Icons.person_2_outlined,
+//                     size: 26.0,
+//                   )))
+//         ],
+//       ),
+//       body: ListView.builder(
+//         padding: const EdgeInsets.all(20.0),
+//         itemCount: records.length,
+//         itemBuilder: (context, index) => GestureDetector(
+//           onTap: () {
+//             // Navigate to medical record details page
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(
+//                 builder: (context) => const MedicalRecordDetails(),
+//               ),
+//             );
+//           },
+//           child: MedicalRecordCard(record: records[index]),
+//         ),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () {
+//           // Navigate to create new record page
+//           Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//               builder: (context) => CreateMedicalRecordPage(),
+//             ),
+//           );
+//         },
+//         child: const Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }
+
+// class MedicalRecordCard extends StatefulWidget {
+//   final QueryDocumentSnapshot issue;
+
+//   const MedicalRecordCard({super.key, required this.issue});
+
+//   @override
+//   _MedicalRecordCardState createState() => _MedicalRecordCardState();
+// }
+
+// class _MedicalRecordCardState extends State<MedicalRecordCard> {
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+//       margin: const EdgeInsets.all(8.0),
+//       child: Padding(
+//         padding: const EdgeInsets.all(12.0),
+//         child: Row(
+//           children: [
+//             Expanded(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     "teri mummy ka title ${widget.issue['issueTitle']}",
+//                     style: TextStyle(
+//                       fontSize: 18.0,
+//                       fontWeight: FontWeight.bold,
+//                       //color: _isOngoing ? Colors.green : Colors.grey[600],
+//                     ),
+//                   ),
+//                   const SizedBox(height: 8.0),
+//                   Text(
+//                     '${widget.record.date.day}/${widget.record.date.month}/${widget.record.date.year}',
+//                     style: TextStyle(color: Colors.grey[600]),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             const SizedBox(width: 10.0),
+//             Column(
+//               children: [
+//                 Row(
+//                   children: [
+//                     Text('Ongoing: '),
+//                     Checkbox(
+//                       value: _isOngoing,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _isOngoing = value!;
+//                         });
+//                         widget.record.ongoing = value!;
+//                       },
+//                     ),
+//                   ],
+//                 ),
+//                 Row(
+//                   children: [
+//                     Text('Doctor Replied: '),
+//                     Checkbox(
+//                       value: _doctorReplied,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           _doctorReplied = value!;
+//                         });
+//                         widget.record.doctorReplied = value!;
+//                       },
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

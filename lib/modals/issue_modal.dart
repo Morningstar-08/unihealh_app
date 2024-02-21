@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class IssueModal {
@@ -6,6 +8,7 @@ class IssueModal {
   String issueTitle;
   bool status;
   String studentId;
+  Array doctorReply;
 
   IssueModal({
     required this.timestamp,
@@ -13,6 +16,7 @@ class IssueModal {
     required this.issueTitle,
     required this.status,
     required this.studentId,
+    required this.doctorReply,
   });
 
   IssueModal.fromJson(Map<String, dynamic> json)
@@ -22,7 +26,8 @@ class IssueModal {
             issueTitle: json['issueTitle']! as String,
             // profile: Map<String, dynamic>.from(json['profile'] ?? {}),
             status: json['status']! as bool,
-            studentId: json['studentId']! as String);
+            studentId: json['studentId']! as String,
+            doctorReply: json['doctorReply']! as Array);
 
   Map<String, dynamic> toJson() {
     return {
