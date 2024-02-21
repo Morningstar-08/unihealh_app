@@ -96,9 +96,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   itemBuilder: (context, index) {
                     QueryDocumentSnapshot querySnapshot =
                         snapshot.data!.docs[index];
-                    print(querySnapshot);
-                    print(querySnapshot['issueTitle']);
-                    print(snapshot.data!.docs.length);
                     return GestureDetector(
                       onTap: () {
                         //Navigate to medical record details page

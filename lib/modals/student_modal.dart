@@ -5,6 +5,7 @@ class StudentModal {
   String hostel;
   int roomNo;
   Map profile;
+  String userType;
 
   StudentModal({
     required this.email,
@@ -13,6 +14,7 @@ class StudentModal {
     required this.profile,
     required this.hostel,
     required this.roomNo,
+    required this.userType,
   });
 
   StudentModal.fromJson(Map<String, dynamic> json)
@@ -22,7 +24,8 @@ class StudentModal {
             name: json['name']! as String,
             profile: Map<String, dynamic>.from(json['profile'] ?? {}),
             hostel: json['hostel']! as String,
-            roomNo: json['roomNo']! as int);
+            roomNo: json['roomNo']! as int,
+            userType: json['userType']! as String);
 
   Map<String, dynamic> toJson() {
     return {
@@ -32,6 +35,7 @@ class StudentModal {
       'profile': profile,
       'hostel': hostel,
       'roomNo': roomNo,
+      'userType': userType,
     };
   }
 }

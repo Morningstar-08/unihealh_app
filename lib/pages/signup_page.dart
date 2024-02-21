@@ -92,6 +92,7 @@ class _SignUpState extends State<SignUp> {
         },
         hostel: hostelName.toString(),
         roomNo: int.parse(roomNumber),
+        userType: 'student',
       );
       await DatabaseService().addStudent(studentMap, enrollmentNumber);
       // Fluttertoast.showToast(
