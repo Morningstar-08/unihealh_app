@@ -6,7 +6,6 @@ import 'package:health_care_app/modals/student_modal.dart';
 import 'package:health_care_app/pages/login_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key, required this.title});
@@ -18,9 +17,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String? _selectedBloodGroup = null;
+  String? _selectedBloodGroup = 'Not Given';
   final List<String?> _bloodGroups = [
-    null,
+    'Not Given',
     'A+',
     'A-',
     'B+',
@@ -95,29 +94,12 @@ class _SignUpState extends State<SignUp> {
         userType: 'student',
       );
       await DatabaseService().addStudent(studentMap, enrollmentNumber);
-      // Fluttertoast.showToast(
-      //   msg: "User successfully created",
-      //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
-      //   timeInSecForIosWeb: 1,
-      //   backgroundColor: Colors.green,
-      //   textColor: Colors.white,
-      //   fontSize: 16.0,
-      // );
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => const LoginPage(title: 'login_page')));
     } else {
-      // Fluttertoast.showToast(
-      //   msg: "Error creating user, please try again",
-      //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
-      //   timeInSecForIosWeb: 1,
-      //   backgroundColor: Colors.green,
-      //   textColor: Colors.white,
-      //   fontSize: 16.0,
-      // );
+      print("Error signing up");
     }
   }
 

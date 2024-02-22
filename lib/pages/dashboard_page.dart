@@ -1,10 +1,9 @@
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_issues.dart';
-import 'package:health_care_app/modals/issue_modal.dart';
-import 'package:health_care_app/pages/login_page.dart';
 import 'package:health_care_app/pages/profile_page.dart';
+import 'package:random_string/random_string.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -13,37 +12,12 @@ class DashboardPage extends StatefulWidget {
   _DashboardPageState createState() => _DashboardPageState();
 }
 
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const LoginPage(title: 'login_page'),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
-
 class _DashboardPageState extends State<DashboardPage> {
-  //Future<QuerySnapshot?>? _issueFuture;
-  Future<QuerySnapshot?> _issueFuture =
-      DatabaseServiceIssues().getIssueDetails();
-  getonLoad() async {
-    setState(() {});
-  }
+  String? uid = FirebaseAuth.instance.currentUser!.email;
 
   @override
   void initState() {
-    // TODO: implement initState
-    getonLoad();
+    // getonLoad();
     super.initState();
   }
 
@@ -54,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
         title: const Text('Dashboard'),
         actions: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(
@@ -64,34 +38,26 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                     );
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.person_2_outlined,
                     size: 26.0,
                   )))
         ],
       ),
-      body: allIssueDetails(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to create new record page
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreateMedicalRecordPage(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget allIssueDetails() {
-    return StreamBuilder<QuerySnapshot?>(
-        stream: _issueFuture.asStream(),
-        builder: (context, AsyncSnapshot<QuerySnapshot?> snapshot) {
-          return snapshot.hasData
-              ? ListView.builder(
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection(ISSUE_COLLECTION_REF)
+              .where("studentid", isEqualTo: uid)
+              .orderBy("createdOn", descending: true)
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              if (snapshot.hasData) {
+                return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     QueryDocumentSnapshot querySnapshot =
@@ -120,8 +86,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "teri mummy ka title ${querySnapshot['issueTitle']}",
-                                      style: TextStyle(
+                                      "${querySnapshot['issueTitle']}",
+                                      style: const TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold,
                                         //color:  ? Colors.green : Colors.grey[600],
@@ -140,7 +106,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text('Ongoing: '),
+                                      const Text('Ongoing: '),
                                       Checkbox(
                                         value: true,
                                         onChanged: (value) {
@@ -154,13 +120,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Text('Doctor Replied: '),
+                                      const Text('Doctor Replied: '),
                                       Checkbox(
                                         value: true,
                                         onChanged: (value) {
-                                          setState(() {
-                                            // _doctorReplied = value!;
-                                          });
+                                          setState(
+                                            () {
+                                              // _doctorReplied = value!;
+                                            },
+                                          );
                                         },
                                       ),
                                     ],
@@ -172,9 +140,28 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                       ),
                     );
-                  })
-              : Container();
-        });
+                  },
+                );
+              } else {
+                return Center(
+                  child: Text(
+                    "No Records Found , $snapshot",
+                    style: const TextStyle(fontSize: 20.0),
+                  ),
+                );
+              }
+            }
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) => CreateMedicalRecordPage());
+          // Navigate to create new record page
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
 
@@ -191,7 +178,7 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
 
   bool status = false;
   String description = "";
-  List doctorReply = List.empty();
+  List doctorReply = [];
 
   @override
   void initState() {
@@ -199,7 +186,6 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
     status = widget.issue['status'] ?? false;
     description = widget.issue['issueDesc'] ?? '';
     doctorReply = widget.issue['doctorReply'] ?? (0);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -242,18 +228,31 @@ class CreateMedicalRecordPage extends StatefulWidget {
 
 class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
-  bool _ongoingValue = false;
-  bool _doctorRepliedValue = false;
+  TextEditingController _symptomController = TextEditingController();
+  String id = randomAlphaNumeric(10);
 
   // remove this and add the actual records list
-  get records => null;
 
   @override
   void dispose() {
     _titleController.dispose();
-    _dateController.dispose();
+    _symptomController.dispose();
     super.dispose();
+  }
+
+  void issueAdd() async {
+    String? uid = FirebaseAuth.instance.currentUser!.email;
+
+    Map<String, dynamic> data = {
+      'issueTitle': _titleController.text,
+      'issueDesc': _symptomController.text,
+      'status': true,
+      'studentid': uid,
+      'doctorReply': [],
+      'createdOn': DateTime.now(),
+    };
+    await DatabaseServiceIssues().addIssue(data, id);
+    print("success");
   }
 
   @override
@@ -273,70 +272,22 @@ class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
             ),
             const SizedBox(height: 20.0),
             TextFormField(
-              controller: _dateController,
-              decoration: const InputDecoration(labelText: 'Date'),
-              onTap: () async {
-                final DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime.now(),
-                );
-                if (pickedDate != null) {
-                  setState(() {
-                    _dateController.text =
-                        pickedDate.toIso8601String().split('T')[0];
-                  });
-                }
-              },
+              controller: _symptomController,
+              decoration: const InputDecoration(labelText: 'Symptoms'),
             ),
             const SizedBox(height: 20.0),
-            Row(
-              children: [
-                const Text('Ongoing: '),
-                Checkbox(
-                  value: _ongoingValue,
-                  onChanged: (value) {
-                    setState(() {
-                      _ongoingValue = value!;
-                    });
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    issueAdd();
+                    // Navigate back to DoctorDashboard
+                    Navigator.pop(context);
                   },
+                  child: const Text('Create Medical Record'),
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                const Text('Doctor Replied: '),
-                Checkbox(
-                  value: _doctorRepliedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      _doctorRepliedValue = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                // Create a new medical record using the entered data
-
-                // Add the new record to the list of records
-                setState(() {
-                  records.add();
-                });
-
-                // Clear text fields after adding record
-                _titleController.clear();
-                _dateController.clear();
-                _ongoingValue = false;
-                _doctorRepliedValue = false;
-
-                // Navigate back to DoctorDashboard
-                Navigator.pop(context);
-              },
-              child: const Text('Create Medical Record'),
+              ),
             ),
           ],
         ),
