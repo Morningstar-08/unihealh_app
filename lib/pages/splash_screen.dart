@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+import 'dart:async';
 import 'package:health_care_app/pages/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,92 +9,15 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _scaleController;
-  late AnimationController _scale2Controller;
-  late AnimationController _widthController;
-  late AnimationController _positionController;
-
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _scale2Animation;
-  late Animation<double> _widthAnimation;
-  late Animation<double> _positionAnimation;
-
-  bool hideIcon = false;
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
-    _scaleController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    _scaleAnimation =
-        Tween<double>(begin: 1.0, end: 0.4).animate(_scaleController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _widthController.forward();
-            }
-          });
-
-    _widthController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    _widthAnimation =
-        Tween<double>(begin: 80.0, end: 300.0).animate(_widthController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _positionController.forward();
-            }
-          });
-
-    _positionController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-
-    _positionAnimation =
-        Tween<double>(begin: 0.0, end: 215.0).animate(_positionController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              setState(() {
-                hideIcon = true;
-              });
-              _scale2Controller.forward();
-            }
-          });
-
-    _scale2Controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-
-    _scale2Animation =
-        Tween<double>(begin: 1.0, end: 200.0).animate(_scale2Controller)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              Navigator.pushReplacement(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  child: const LoginPage(title: 'login_page'),
-                ),
-              );
-            }
-          });
   }
 
   @override
   void dispose() {
-    _scaleController.dispose();
-    _scale2Controller.dispose();
-    _widthController.dispose();
-    _positionController.dispose();
+    // _timer?.cancel();
     super.dispose();
   }
 
@@ -102,111 +25,71 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    return Theme(
-      data: ThemeData(primaryColor: const Color.fromARGB(100, 103, 80, 164)),
-      child: Scaffold(
-        backgroundColor: const Color.fromRGBO(1, 8, 24, 1),
-        body: SizedBox(
-          width: double.infinity,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  width: width,
-                  height: 400,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/unihealth.png'),
-                      fit: BoxFit.cover,
-                    ),
+    Future.delayed(Duration(seconds: 5), () {
+      // Navigate to LoginPage after 3 seconds of inactivity with a fade transition
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              LoginPage(title: 'title'),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+          transitionDuration: Duration(milliseconds: 1000),
+        ),
+      );
+    });
+
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          // If user taps anywhere on the screen, navigate to LoginPage with a fade transition
+          Navigator.of(context).pushReplacement(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  LoginPage(title: 'title'),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+              transitionDuration: Duration(milliseconds: 1000),
+            ),
+          );
+        },
+        child: Stack(
+          children: [
+            Container(
+              width: width,
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color.fromARGB(252, 37, 129, 197),
+                    Color.fromARGB(129, 127, 63, 152)
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                width: 200,
+                height: 400,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/unihealth_logo.png'),
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      "Welcome",
-                      style: TextStyle(color: Colors.white, fontSize: 50),
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      "Hellewwwww !!!! We promise that you'll have the most fuss-free time with us ever.",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(.7),
-                        height: 1.4,
-                        fontSize: 20,
-                      ),
-                    ),
-                    const SizedBox(height: 180),
-                    AnimatedBuilder(
-                      animation: _scaleController,
-                      builder: (context, child) => Transform.scale(
-                        scale: _scaleAnimation.value,
-                        child: Center(
-                          child: AnimatedBuilder(
-                            animation: _widthController,
-                            builder: (context, child) => Container(
-                              width: _widthAnimation.value,
-                              height: 80,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.blue.withOpacity(.4),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  _scaleController.forward();
-                                },
-                                child: Stack(
-                                  children: <Widget>[
-                                    AnimatedBuilder(
-                                      animation: _positionController,
-                                      builder: (context, child) => Positioned(
-                                        left: _positionAnimation.value,
-                                        child: AnimatedBuilder(
-                                          animation: _scale2Controller,
-                                          builder: (context, child) =>
-                                              Transform.scale(
-                                            scale: _scale2Animation.value,
-                                            child: Container(
-                                              width: 60,
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                              ),
-                                              child: hideIcon == false
-                                                  ? const Icon(
-                                                      Icons.arrow_forward,
-                                                      color: Colors.white,
-                                                    )
-                                                  : Container(),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 60),
-                  ],
-                ),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
