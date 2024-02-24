@@ -14,8 +14,6 @@ class _ProfilePageState extends State<ProfilePage> {
   late Future<QuerySnapshot> _studentFuture;
   // final String profileImage = 'assets/toril.jpg'; // Use local asset path
   String name = "";
-
-  // Replace placeholder data with actual user information from your data source
   String email = '';
   String dob = '';
   String hostelNumber = '';

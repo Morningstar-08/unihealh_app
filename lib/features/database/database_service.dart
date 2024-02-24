@@ -41,4 +41,11 @@ class DatabaseService {
         .where("email", isEqualTo: uid)
         .get();
   }
+
+  Future<QuerySnapshot> getStudentDetails(String uid) async {
+    return FirebaseFirestore.instance
+        .collection(STUDENT_COLLECTION_REF)
+        .where("email", isEqualTo: uid)
+        .get();
+  }
 }
