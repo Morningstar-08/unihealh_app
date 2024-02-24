@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_issues.dart';
 import 'package:health_care_app/pages/profile_page.dart';
+import 'package:intl/intl.dart';
 import 'package:random_string/random_string.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -53,6 +54,7 @@ class _DashboardPageState extends State<DashboardPage> {
           stream: FirebaseFirestore.instance
               .collection(ISSUE_COLLECTION_REF)
               .where("studentid", isEqualTo: uid)
+              .orderBy('status', descending: true)
               .orderBy("createdOn", descending: true)
               .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
@@ -67,6 +69,11 @@ class _DashboardPageState extends State<DashboardPage> {
                   itemBuilder: (context, index) {
                     QueryDocumentSnapshot querySnapshot =
                         snapshot.data!.docs[index];
+                    Timestamp timestamp = querySnapshot['createdOn'];
+                    DateTime date = timestamp.toDate();
+                    String formattedDate =
+                        DateFormat('dd-MM-yyyy').format(date);
+                    bool onGoing = querySnapshot['status'];
                     return GestureDetector(
                       onTap: () {
                         //Navigate to medical record details page
@@ -79,7 +86,9 @@ class _DashboardPageState extends State<DashboardPage> {
                         );
                       },
                       child: Card(
-                        color: Color.fromARGB(255, 236, 219, 252),
+                        color: onGoing
+                            ? const Color.fromARGB(255, 127, 235, 131)
+                            : Color.fromARGB(255, 236, 219, 252),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         margin: const EdgeInsets.symmetric(
@@ -100,12 +109,20 @@ class _DashboardPageState extends State<DashboardPage> {
                                         //color:  ? Colors.green : Colors.grey[600],
                                       ),
                                     ),
-                                    Text(
-                                      "${querySnapshot['createdOn']}",
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500,
-                                        //color:  ? Colors.green : Colors.grey[600],
+                                    Align(
+                                      alignment: AlignmentDirectional.bottomEnd,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 12.0),
+                                        child: Text(
+                                          "Created On: $formattedDate",
+                                          style: const TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 124, 123, 123),
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
                                     )
                                   ],
@@ -205,6 +222,18 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Title : $title"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: const Icon(
+                Icons.check,
+                size: 26.0,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
