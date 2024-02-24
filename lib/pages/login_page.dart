@@ -3,7 +3,6 @@ import 'package:health_care_app/features/database/database_service.dart';
 import 'package:health_care_app/pages/dashboard_page.dart';
 //import 'package:health_care_app/pages/dashboard_test.dart';
 import 'package:health_care_app/pages/doctor_dashboard.dart';
-import 'package:health_care_app/pages/profile_page.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:health_care_app/features/authentication/firebase_authservice.dart';
@@ -38,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     User? user = await _auth.signInwithEmailAndPassword(email, password);
 
     if (user != null) {
+      print(user.uid);
       String? userType = await DatabaseService().getUserType();
       if (userType == "student") {
         Navigator.pushReplacement(context,

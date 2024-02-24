@@ -9,4 +9,8 @@ class DatabaseServiceIssues {
         .doc(id)
         .set(data);
   }
+
+  // Future<Stream<QuerySnapshot>> getIssuesAll() async {
+  //   return await FirebaseFirestore.instance.collection(ISSUE_COLLECTION_REF).;
+  // }
 }

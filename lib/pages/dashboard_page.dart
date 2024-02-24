@@ -185,7 +185,7 @@ class MedicalRecordDetails extends StatefulWidget {
 
 class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
   String title = '';
-  DateTime createdOn = DateTime.now();
+  Timestamp createdOn = Timestamp.now();
   bool status = false;
   String description = "";
   List doctorReply = [];
@@ -196,7 +196,7 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
     status = widget.issue['status'] ?? false;
     description = widget.issue['issueDesc'] ?? '';
     doctorReply = widget.issue['doctorReply'] ?? (0);
-    createdOn = widget.issue['timestamp'] ?? '';
+    createdOn = widget.issue['createdOn'] ?? '';
     super.initState();
   }
 

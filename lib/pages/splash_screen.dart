@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:health_care_app/pages/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -25,19 +25,19 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       // Navigate to LoginPage after 3 seconds of inactivity with a fade transition
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              LoginPage(title: 'title'),
+              const LoginPage(title: 'title'),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
               opacity: animation,
               child: child,
             );
           },
-          transitionDuration: Duration(milliseconds: 1000),
+          transitionDuration: const Duration(milliseconds: 1000),
         ),
       );
     });
@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  LoginPage(title: 'title'),
+                  const LoginPage(title: 'title'),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: child,
                 );
               },
-              transitionDuration: Duration(milliseconds: 1000),
+              transitionDuration: const Duration(milliseconds: 1000),
             ),
           );
         },
