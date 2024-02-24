@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_issues.dart';
-import 'package:health_care_app/pages/profile_page.dart';
 import 'package:intl/intl.dart';
 import 'package:random_string/random_string.dart';
 
@@ -10,7 +9,7 @@ class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
-  _DashboardPageState createState() => _DashboardPageState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
@@ -32,23 +31,6 @@ class _DashboardPageState extends State<DashboardPage> {
               fontWeight: FontWeight.bold,
               color: Color.fromARGB(255, 111, 89, 168)),
         ),
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ProfilePage(),
-                      ),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.person_2_outlined,
-                    size: 26.0,
-                  )))
-        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
@@ -88,7 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: Card(
                         color: onGoing
                             ? const Color.fromARGB(255, 127, 235, 131)
-                            : Color.fromARGB(255, 236, 219, 252),
+                            : Color.fromARGB(169, 236, 219, 252),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         margin: const EdgeInsets.symmetric(
@@ -129,39 +111,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                               ),
                               const SizedBox(width: 10.0),
-                              // Column(
-                              //   children: [
-                              //     Row(
-                              //       children: [
-                              //         const Text('Ongoing: '),
-                              //         Checkbox(
-                              //           value: true,
-                              //           onChanged: (value) {
-                              //             setState(() {
-                              //               //_isOngoing = value!;
-                              //             });
-                              //             // widget.record.ongoing = value!;
-                              //           },
-                              //         ),
-                              //       ],
-                              //     ),
-                              //     Row(
-                              //       children: [
-                              //         const Text('Doctor Replied: '),
-                              //         Checkbox(
-                              //           value: true,
-                              //           onChanged: (value) {
-                              //             setState(
-                              //               () {
-                              //                 // _doctorReplied = value!;
-                              //               },
-                              //             );
-                              //           },
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ],
-                              // ),
                             ],
                           ),
                         ),
@@ -221,7 +170,7 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Title : $title"),
+        title: Text("Details"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -299,7 +248,12 @@ class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Medical Record'),
+        title: const Text(
+          'Report Medical Issue',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 111, 89, 168)),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -325,7 +279,7 @@ class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
                     // Navigate back to DoctorDashboard
                     Navigator.pop(context);
                   },
-                  child: const Text('Create Medical Record'),
+                  child: const Text('Report'),
                 ),
               ),
             ),

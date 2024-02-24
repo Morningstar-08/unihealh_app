@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_service.dart';
-import 'package:health_care_app/pages/dashboard_page.dart';
+// import 'package:health_care_app/pages/dashboard_page.dart';
 //import 'package:health_care_app/pages/dashboard_test.dart';
 import 'package:health_care_app/pages/doctor_dashboard.dart';
+import 'package:health_care_app/pages/nav_bar.dart';
 import 'package:health_care_app/pages/signup_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:health_care_app/features/authentication/firebase_authservice.dart';
@@ -40,8 +41,8 @@ class _LoginPageState extends State<LoginPage> {
       print(user.uid);
       String? userType = await DatabaseService().getUserType();
       if (userType == "student") {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const DashboardPage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const MainPage()));
       } else if (userType == "doctor") {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const DoctorDashboard()));
