@@ -25,7 +25,12 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text(
+          'Dashboard',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 111, 89, 168)),
+        ),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -74,9 +79,11 @@ class _DashboardPageState extends State<DashboardPage> {
                         );
                       },
                       child: Card(
+                        color: Color.fromARGB(255, 236, 219, 252),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
-                        margin: const EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 8),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
@@ -89,52 +96,55 @@ class _DashboardPageState extends State<DashboardPage> {
                                       "${querySnapshot['issueTitle']}",
                                       style: const TextStyle(
                                         fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w500,
                                         //color:  ? Colors.green : Colors.grey[600],
                                       ),
                                     ),
-                                    const SizedBox(height: 8.0),
                                     Text(
-                                      '',
-                                      style: TextStyle(color: Colors.grey[600]),
-                                    ),
+                                      "${querySnapshot['createdOn']}",
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500,
+                                        //color:  ? Colors.green : Colors.grey[600],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
                               const SizedBox(width: 10.0),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text('Ongoing: '),
-                                      Checkbox(
-                                        value: true,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            //_isOngoing = value!;
-                                          });
-                                          // widget.record.ongoing = value!;
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text('Doctor Replied: '),
-                                      Checkbox(
-                                        value: true,
-                                        onChanged: (value) {
-                                          setState(
-                                            () {
-                                              // _doctorReplied = value!;
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                              // Column(
+                              //   children: [
+                              //     Row(
+                              //       children: [
+                              //         const Text('Ongoing: '),
+                              //         Checkbox(
+                              //           value: true,
+                              //           onChanged: (value) {
+                              //             setState(() {
+                              //               //_isOngoing = value!;
+                              //             });
+                              //             // widget.record.ongoing = value!;
+                              //           },
+                              //         ),
+                              //       ],
+                              //     ),
+                              //     Row(
+                              //       children: [
+                              //         const Text('Doctor Replied: '),
+                              //         Checkbox(
+                              //           value: true,
+                              //           onChanged: (value) {
+                              //             setState(
+                              //               () {
+                              //                 // _doctorReplied = value!;
+                              //               },
+                              //             );
+                              //           },
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),
@@ -175,7 +185,7 @@ class MedicalRecordDetails extends StatefulWidget {
 
 class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
   String title = '';
-
+  DateTime createdOn = DateTime.now();
   bool status = false;
   String description = "";
   List doctorReply = [];
@@ -186,6 +196,7 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
     status = widget.issue['status'] ?? false;
     description = widget.issue['issueDesc'] ?? '';
     doctorReply = widget.issue['doctorReply'] ?? (0);
+    createdOn = widget.issue['timestamp'] ?? '';
     super.initState();
   }
 
