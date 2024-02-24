@@ -70,7 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: Card(
                         color: onGoing
                             ? const Color.fromARGB(255, 127, 235, 131)
-                            : Color.fromARGB(169, 236, 219, 252),
+                            : const Color.fromARGB(169, 236, 219, 252),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         margin: const EdgeInsets.symmetric(
@@ -170,18 +170,31 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Details"),
+        title: const Text("Details"),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.check,
-                size: 26.0,
-              ),
-            ),
-          ),
+          status
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        widget.issue.reference.update({'status': false});
+                      },
+                      child: const Text(
+                        "Close Issue",
+                        style: TextStyle(fontSize: 18.0, color: Colors.red),
+                      )))
+              : Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.close,
+                      size: 26.0,
+                    ),
+                  ),
+                ),
         ],
       ),
       body: Center(
