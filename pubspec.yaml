@@ -67,6 +67,7 @@ flutter:
   assets:
     - assets/images/unihealth.png
     - assets/images/unihealth_logo.png
+    - assets/images/dummy_profile.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
