@@ -86,7 +86,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                MedicalRecordDetails(issue: querySnapshot),
+                                MedicalRecordDetails1(issue: querySnapshot),
                           ),
                         );
                       },
@@ -156,15 +156,15 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
   }
 }
 
-class MedicalRecordDetails extends StatefulWidget {
+class MedicalRecordDetails1 extends StatefulWidget {
   final QueryDocumentSnapshot issue;
-  const MedicalRecordDetails({super.key, required this.issue});
+  const MedicalRecordDetails1({super.key, required this.issue});
 
   @override
-  State<MedicalRecordDetails> createState() => _MedicalRecordDetailsState();
+  State<MedicalRecordDetails1> createState() => _MedicalRecordDetails1State();
 }
 
-class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
+class _MedicalRecordDetails1State extends State<MedicalRecordDetails1> {
   String title = '';
   Timestamp createdOn = Timestamp.now();
   bool status = false;

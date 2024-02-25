@@ -156,7 +156,7 @@ class _SignUpState extends State<SignUp> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(_createRoute());
+            Navigator.of(context).pushReplacement(_createRoute());
           },
         ),
       ),
@@ -467,6 +467,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
