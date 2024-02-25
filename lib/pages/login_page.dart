@@ -152,18 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                CheckboxListTile(
-                  title: const Text("Remember me"),
-                  contentPadding: EdgeInsets.zero,
-                  value: true, // rememberValue,
-                  activeColor: Theme.of(context).colorScheme.primary,
-                  onChanged: (newValue) {
-                    setState(() {
-                      // rememberValue = newValue!;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
                 const SizedBox(
                   height: 20,
                 ),
