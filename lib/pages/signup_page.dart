@@ -99,7 +99,18 @@ class _SignUpState extends State<SignUp> {
           MaterialPageRoute(
               builder: (context) => const LoginPage(title: 'login_page')));
     } else {
-      print("Error signing up");
+      AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Error signing up'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      );
     }
   }
 
