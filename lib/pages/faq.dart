@@ -122,6 +122,7 @@ class _FirstAidPageState extends State<FirstAidPage> {
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 111, 89, 168),
                             ),
                           ),
                         );
