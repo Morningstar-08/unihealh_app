@@ -14,6 +14,7 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   String? uid = FirebaseAuth.instance.currentUser!.email;
+  final String uid2 = 'swastik@gmail.com';
 
   @override
   void initState() {
@@ -35,7 +36,7 @@ class _DashboardPageState extends State<DashboardPage> {
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection(ISSUE_COLLECTION_REF)
-              .where("studentid", isEqualTo: uid)
+              .where("studentid", isEqualTo: uid2)
               .orderBy('status', descending: true)
               .orderBy("createdOn", descending: true)
               .snapshots(),
@@ -46,77 +47,172 @@ class _DashboardPageState extends State<DashboardPage> {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    QueryDocumentSnapshot querySnapshot =
-                        snapshot.data!.docs[index];
-                    Timestamp timestamp = querySnapshot['createdOn'];
-                    DateTime date = timestamp.toDate();
-                    String formattedDate =
-                        DateFormat('dd-MM-yyyy').format(date);
-                    bool onGoing = querySnapshot['status'];
-                    return GestureDetector(
-                      onTap: () {
-                        //Navigate to medical record details page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                MedicalRecordDetails(issue: querySnapshot),
+                return ListView(
+                  children: [
+                    // Ongoing Issues Section
+                    if (snapshot.data!.docs.any((doc) => doc['status'] == true))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 8),
+                            child: Text(
+                              'Ongoing Issues',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        );
-                      },
-                      child: Card(
-                        color: onGoing
-                            ? const Color.fromARGB(255, 127, 235, 131)
-                            : const Color.fromARGB(169, 236, 219, 252),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 8),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${querySnapshot['issueTitle']}",
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500,
-                                        //color:  ? Colors.green : Colors.grey[600],
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional.bottomEnd,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 12.0),
-                                        child: Text(
-                                          "Created On: $formattedDate",
-                                          style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 124, 123, 123),
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                          ...snapshot.data!.docs
+                              .where((doc) => doc['status'] == true)
+                              .map((querySnapshot) {
+                            Timestamp timestamp = querySnapshot['createdOn'];
+                            DateTime date = timestamp.toDate();
+                            String formattedDate =
+                                DateFormat('dd-MM-yyyy').format(date);
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MedicalRecordDetails(
+                                        issue: querySnapshot),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                color: const Color.fromARGB(255, 127, 235, 131),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 8),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${querySnapshot['issueTitle']}",
+                                              style: const TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 12.0),
+                                              child: Text(
+                                                "Created On: $formattedDate",
+                                                style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 124, 123, 123),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                              const SizedBox(width: 10.0),
-                            ],
-                          ),
-                        ),
+                            );
+                          }),
+                        ],
                       ),
-                    );
-                  },
+
+                    // History Issues Section
+                    if (snapshot.data!.docs
+                        .any((doc) => doc['status'] == false))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 8),
+                            child: Text(
+                              'History',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          ...snapshot.data!.docs
+                              .where((doc) => doc['status'] == false)
+                              .map((querySnapshot) {
+                            Timestamp timestamp = querySnapshot['createdOn'];
+                            DateTime date = timestamp.toDate();
+                            String formattedDate =
+                                DateFormat('dd-MM-yyyy').format(date);
+
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MedicalRecordDetails(
+                                        issue: querySnapshot),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                color: const Color.fromARGB(255, 236, 219, 252),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 8),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${querySnapshot['issueTitle']}",
+                                              style: const TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 12.0),
+                                              child: Text(
+                                                "Created On: $formattedDate",
+                                                style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 124, 123, 123),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          })
+                        ],
+                      ),
+                  ],
                 );
               } else {
                 return Center(
@@ -244,12 +340,13 @@ class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
 
   void issueAdd() async {
     String? uid = FirebaseAuth.instance.currentUser!.email;
+    const String uid2 = 'swastik@gmail.com';
 
     Map<String, dynamic> data = {
       'issueTitle': _titleController.text,
       'issueDesc': _symptomController.text,
       'status': true,
-      'studentid': uid,
+      'studentid': uid2,
       'doctorReply': [],
       'createdOn': DateTime.now(),
     };
