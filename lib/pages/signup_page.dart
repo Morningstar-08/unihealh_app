@@ -17,9 +17,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String? _selectedBloodGroup = 'Not Given';
+  String? _selectedBloodGroup = 'Blood Group';
   final List<String?> _bloodGroups = [
-    'Not Given',
+    'Blood Group',
     'A+',
     'A-',
     'B+',
@@ -29,6 +29,14 @@ class _SignUpState extends State<SignUp> {
     'O+',
     'O-',
   ];
+  String? _selectedSex = 'Sex';
+  final List<String?> _Sex = [
+    'Sex',
+    'Male',
+    'Female',
+    'Transgender',
+    'Prefer not to say',
+  ];
 
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -36,6 +44,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final TextEditingController _sexController = TextEditingController();
   final TextEditingController _hostelNameController = TextEditingController();
   final TextEditingController _roomNumberController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
@@ -62,6 +71,7 @@ class _SignUpState extends State<SignUp> {
     final String studentName = _nameController.text;
     final String email = _emailController.text;
     final String password = _passwordController.text;
+    final String sex = _sexController.text;
     final String hostelName = _hostelNameController.text;
     final String roomNumber = _roomNumberController.text;
     final String dob = _dobController.text;
@@ -88,6 +98,7 @@ class _SignUpState extends State<SignUp> {
           'height': height,
           'medicalRecord': medicalRecord,
           'weight': weight,
+          'sex': sex,
         },
         hostel: hostelName.toString(),
         roomNo: int.parse(roomNumber),
@@ -238,6 +249,28 @@ class _SignUpState extends State<SignUp> {
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
                     hintText: 'Confirm Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                DropdownButtonFormField<String?>(
+                  value: _selectedSex,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedSex = newValue!;
+                    });
+                  },
+                  items: _Sex.map((String? value) {
+                    return DropdownMenuItem<String?>(
+                      value: value,
+                      child: Text(value ?? 'Sex'),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    hintText: 'Sex',
+                    prefixIcon: const Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
