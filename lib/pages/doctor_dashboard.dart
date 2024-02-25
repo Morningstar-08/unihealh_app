@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_issues.dart';
 import 'package:health_care_app/features/database/database_service.dart';
+import 'package:health_care_app/pages/login_page.dart';
 import 'package:intl/intl.dart';
 
 class DoctorDashboard extends StatefulWidget {
@@ -18,7 +19,6 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
 
   @override
   void initState() {
-    // getonLoad();
     super.initState();
   }
 
@@ -26,6 +26,27 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage(
+                                  title: "Login Page",
+                                )));
+                  },
+                  child: const Text(
+                    "Log Out",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.red,
+                        fontFamily: "Afacad"),
+                  )))
+        ],
         title: const Text(
           'Dashboard',
           style: TextStyle(
@@ -72,7 +93,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                       child: Card(
                         color: onGoing
                             ? const Color.fromARGB(255, 127, 235, 131)
-                            : const Color.fromARGB(169, 236, 219, 252),
+                            : const Color.fromARGB(255, 236, 219, 252),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
                         margin: const EdgeInsets.symmetric(

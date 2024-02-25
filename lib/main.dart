@@ -22,9 +22,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+        theme: ThemeData(
+          fontFamily: "Afacad",
+          textTheme: const TextTheme(
+              bodyLarge: TextStyle(fontFamily: "Afacad", fontSize: 22)),
+        ));
   }
 }

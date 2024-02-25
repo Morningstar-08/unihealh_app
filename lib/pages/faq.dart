@@ -8,7 +8,7 @@ class FirstAidPage extends StatefulWidget {
 
 class _FirstAidPageState extends State<FirstAidPage> {
   Map<String, List<String>> firstAidSteps = {
-    'Cuts and Scrapkjhes': [
+    'Cuts and Scrapes': [
       'Clean the wound with soap and water.',
       'Apply an antibiotic ointment.',
       'Cover the wound with a sterile bandage.',
@@ -95,11 +95,12 @@ class _FirstAidPageState extends State<FirstAidPage> {
           'First Aid',
           style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 30,
               color: Color.fromARGB(255, 111, 89, 168)),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: firstAidSteps.keys.map((title) {
@@ -107,7 +108,7 @@ class _FirstAidPageState extends State<FirstAidPage> {
               onTap: () => _handleCardTap(title),
               child: Card(
                 elevation: 4.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0),
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ExpansionPanelList(
                   expansionCallback: (index, isExpanded) {
                     _handleCardTap(
@@ -119,8 +120,8 @@ class _FirstAidPageState extends State<FirstAidPage> {
                         return ListTile(
                           title: Text(
                             title,
-                            style: TextStyle(
-                              fontSize: 18.0,
+                            style: const TextStyle(
+                              fontSize: 20.0,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 111, 89, 168),
                             ),
@@ -128,13 +129,16 @@ class _FirstAidPageState extends State<FirstAidPage> {
                         );
                       },
                       body: Padding(
-                        padding: EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+                        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: firstAidSteps[title]!
                               .map((step) => Padding(
-                                    padding: EdgeInsets.only(bottom: 8.0),
-                                    child: Text(step),
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      step,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
                                   ))
                               .toList(),
                         ),
