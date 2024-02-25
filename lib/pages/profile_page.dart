@@ -14,19 +14,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<QuerySnapshot> _studentFuture;
   // final String profileImage = 'assets/toril.jpg'; // Use local asset path
-  String name = "";
-  String email = '';
-  String dob = '';
-  String hostelNumber = '';
-  String height = '';
-  String weight = '';
-  String bloodGroup = '';
-  String allergies = '';
-  String medicalHistory = '';
 
   @override
   void initState() {
-    // TODO: implement initStat
     _studentFuture = DatabaseService().getStudents();
     super.initState();
   }
@@ -57,13 +47,14 @@ class _ProfilePageState extends State<ProfilePage> {
               String name = data['name'] ?? '';
               String email = data['email'] ?? '';
               String dob = data['profile']['dob'] ?? '';
-              String hostelNumber = data['hostel'] ?? '';
+              String hostelName = data['hostel'] ?? '';
               String height = data['profile']['height']?.toString() ?? '';
               String weight = data['profile']['weight']?.toString() ?? '';
               String bloodGroup = data['profile']['bloodGroup'] ?? '';
               String allergies = data['profile']['allergies'] ?? '';
               String medicalHistory = data['profile']['medicalRecord'] ?? '';
               String sex = data['profile']['sex'] ?? '';
+              int hostelRoom = data['roomNo'] ?? '';
 
               return SingleChildScrollView(
                 child: Column(
@@ -104,7 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileList(text: email, icon: Icons.email_outlined),
                           ProfileList(text: dob, icon: Icons.cake_outlined),
                           ProfileList(
-                              text: hostelNumber, icon: Icons.home_outlined),
+                              text: "$hostelName - $hostelRoom",
+                              icon: Icons.home_outlined),
                           // Medical Info Section
                           const SizedBox(height: 10.0),
                           const Text(

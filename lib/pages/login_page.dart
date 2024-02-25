@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:health_care_app/features/database/database_service.dart';
-// import 'package:health_care_app/pages/dashboard_page.dart';
-//import 'package:health_care_app/pages/dashboard_test.dart';
 import 'package:health_care_app/pages/doctor_dashboard.dart';
 import 'package:health_care_app/pages/nav_bar.dart';
 import 'package:health_care_app/pages/signup_page.dart';
@@ -154,20 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                CheckboxListTile(
-                  title: const Text("Remember me"),
-                  contentPadding: EdgeInsets.zero,
-                  value: true, // rememberValue,
-                  activeColor: Theme.of(context).colorScheme.primary,
-                  onChanged: (newValue) {
-                    setState(() {
-                      // rememberValue = newValue!;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -182,9 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: const Text(
                     'Sign in',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
                 const SizedBox(
@@ -193,7 +177,10 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Not registered yet?'),
+                    const Text(
+                      'Not registered yet?',
+                      style: TextStyle(fontSize: 18),
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -204,7 +191,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       },
-                      child: const Text('Create an account'),
+                      child: const Text(
+                        'Create an account',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ],
                 ),
