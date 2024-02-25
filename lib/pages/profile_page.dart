@@ -1,4 +1,5 @@
 import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:health_care_app/pages/login_page.dart";
 import 'package:health_care_app/features/database/database_service.dart';
@@ -38,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
           'Profile',
           style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 30,
               color: Color.fromARGB(255, 111, 89, 168)),
         ),
       ),
@@ -65,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Center(
+                    const Center(
                       child: CircleAvatar(
                         // backgroundImage: AssetImage(profileImage),
                         radius: 65.0,
@@ -77,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         name,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 22.0,
+                          fontSize: 24.0,
                         ),
                       ),
                     ),
@@ -137,6 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.only(bottom: 20.0),
                       child: ElevatedButton(
                         onPressed: () {
+                          FirebaseAuth.instance.signOut();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -152,6 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: const Text(
                           'Logout',
                           style: TextStyle(
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

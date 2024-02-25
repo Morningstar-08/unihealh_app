@@ -14,7 +14,6 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   String? uid = FirebaseAuth.instance.currentUser!.email;
-  final String uid2 = 'swastik@gmail.com';
 
   @override
   void initState() {
@@ -30,13 +29,15 @@ class _DashboardPageState extends State<DashboardPage> {
           'Dashboard',
           style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontFamily: "Afacad",
+              fontSize: 30,
               color: Color.fromARGB(255, 111, 89, 168)),
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection(ISSUE_COLLECTION_REF)
-              .where("studentid", isEqualTo: uid2)
+              .where("studentid", isEqualTo: uid)
               .orderBy('status', descending: true)
               .orderBy("createdOn", descending: true)
               .snapshots(),
@@ -60,7 +61,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             child: Text(
                               'Ongoing Issues',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -101,7 +102,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                             Text(
                                               "${querySnapshot['issueTitle']}",
                                               style: const TextStyle(
-                                                fontSize: 18.0,
+                                                fontSize: 22.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -113,7 +114,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 style: const TextStyle(
                                                   color: Color.fromARGB(
                                                       255, 124, 123, 123),
-                                                  fontSize: 14.0,
+                                                  fontSize: 16.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
@@ -140,9 +141,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 8),
                             child: Text(
-                              'History',
+                              'Medical History',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -184,7 +185,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                             Text(
                                               "${querySnapshot['issueTitle']}",
                                               style: const TextStyle(
-                                                fontSize: 18.0,
+                                                fontSize: 22.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -196,7 +197,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 style: const TextStyle(
                                                   color: Color.fromARGB(
                                                       255, 124, 123, 123),
-                                                  fontSize: 14.0,
+                                                  fontSize: 16.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
@@ -340,13 +341,12 @@ class _CreateMedicalRecordPageState extends State<CreateMedicalRecordPage> {
 
   void issueAdd() async {
     String? uid = FirebaseAuth.instance.currentUser!.email;
-    const String uid2 = 'swastik@gmail.com';
 
     Map<String, dynamic> data = {
       'issueTitle': _titleController.text,
       'issueDesc': _symptomController.text,
       'status': true,
-      'studentid': uid2,
+      'studentid': uid,
       'doctorReply': [],
       'createdOn': DateTime.now(),
     };
