@@ -205,6 +205,7 @@ class _MedicalRecordDetails1State extends State<MedicalRecordDetails1> {
                   child: GestureDetector(
                       onTap: () {
                         widget.issue.reference.update({'status': false});
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         "Close Issue",
@@ -224,95 +225,99 @@ class _MedicalRecordDetails1State extends State<MedicalRecordDetails1> {
                 ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: FutureBuilder<QuerySnapshot>(
-          future: studentDetails,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              var data = snapshot.data?.docs.first;
-              studentName = data?['name'] ?? "";
-              enrollmentNo = data?['enrollmentNo'] ?? "";
-              height = data?['profile']['height'] ?? "";
-              weight = data?['profile']['weight'] ?? "";
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Card(
-                            color: const Color.fromARGB(255, 250, 220, 255),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 10.0),
-                                  Text(
-                                    "Student Name: $studentName",
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      fontFamily: 'Afacad',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: FutureBuilder<QuerySnapshot>(
+            future: studentDetails,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                var data = snapshot.data?.docs.first;
+                studentName = data?['name'] ?? "";
+                enrollmentNo = data?['enrollmentNo'] ?? "";
+                height = data?['profile']['height'] ?? "";
+                weight = data?['profile']['weight'] ?? "";
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                              color: const Color.fromARGB(255, 250, 220, 255),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 10.0),
+                                    Text(
+                                      "Student Name: $studentName",
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontFamily: 'Afacad',
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                  Text(
-                                    "Enrollment No: $enrollmentNo",
-                                    style: const TextStyle(
-                                        fontSize: 22, fontFamily: "Afacad"),
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                  Text(
-                                    "Height: $height",
-                                    style: const TextStyle(
-                                        fontSize: 22, fontFamily: 'Afacad'),
-                                  ),
-                                  const SizedBox(height: 10.0),
-                                  Text(
-                                    "Weight: $weight",
-                                    style: const TextStyle(
-                                        fontSize: 22, fontFamily: 'Afacad'),
-                                  ),
-                                ],
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40.0),
-                  Text(
-                    'Title : $title',
-                    style:
-                        const TextStyle(fontSize: 26.0, fontFamily: 'Afacad'),
-                  ),
-                  const SizedBox(height: 20.0),
-                  Text(
-                    'Issue Description : $description',
-                    style:
-                        const TextStyle(fontSize: 24.0, fontFamily: 'Afacad'),
-                  ),
-                  const SizedBox(height: 30.0),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Doctor Reply',
-                      border: OutlineInputBorder(),
+                                    const SizedBox(height: 10.0),
+                                    Text(
+                                      "Enrollment No: $enrollmentNo",
+                                      style: const TextStyle(
+                                          fontSize: 22, fontFamily: "Afacad"),
+                                    ),
+                                    const SizedBox(height: 10.0),
+                                    Text(
+                                      "Height: $height",
+                                      style: const TextStyle(
+                                          fontSize: 22, fontFamily: 'Afacad'),
+                                    ),
+                                    const SizedBox(height: 10.0),
+                                    Text(
+                                      "Weight: $weight",
+                                      style: const TextStyle(
+                                          fontSize: 22, fontFamily: 'Afacad'),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ),
+                      ],
                     ),
-                    onChanged: (value) {
-                      setState(() {
-                        doctorReply.add(value);
-                      });
-                    },
-                  ),
-                ],
-              );
-            }
-          },
+                    const SizedBox(height: 40.0),
+                    Text(
+                      'Title : $title',
+                      style:
+                          const TextStyle(fontSize: 26.0, fontFamily: 'Afacad'),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Text(
+                      'Issue Description : $description',
+                      style:
+                          const TextStyle(fontSize: 24.0, fontFamily: 'Afacad'),
+                    ),
+                    const SizedBox(height: 30.0),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Doctor Reply',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          doctorReply.add(value);
+                        });
+                      },
+                    ),
+                    ElevatedButton(
+                        onPressed: () {}, child: const Text("Submit")),
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
     );

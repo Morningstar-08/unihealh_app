@@ -275,6 +275,7 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
                     child: GestureDetector(
                         onTap: () {
                           widget.issue.reference.update({'status': false});
+                          Navigator.pop(context);
                         },
                         child: const Text(
                           "Close Issue",
