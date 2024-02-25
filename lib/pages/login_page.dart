@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -168,9 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: const Text(
                     'Sign in',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
                 const SizedBox(
@@ -179,7 +177,10 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Not registered yet?'),
+                    const Text(
+                      'Not registered yet?',
+                      style: TextStyle(fontSize: 18),
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -190,7 +191,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       },
-                      child: const Text('Create an account'),
+                      child: const Text(
+                        'Create an account',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ],
                 ),
