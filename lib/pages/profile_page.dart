@@ -26,7 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    // TODO: implement initStat
     _studentFuture = DatabaseService().getStudents();
     super.initState();
   }
