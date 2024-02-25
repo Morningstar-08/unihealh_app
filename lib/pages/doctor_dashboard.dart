@@ -29,6 +29,8 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         title: const Text(
           'Dashboard',
           style: TextStyle(
+              fontFamily: 'Afacad',
+              fontSize: 30,
               fontWeight: FontWeight.bold,
               color: Color.fromARGB(255, 111, 89, 168)),
         ),
@@ -86,8 +88,9 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
                                     Text(
                                       "${querySnapshot['issueTitle']}",
                                       style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 24.0,
+                                        fontFamily: 'Afacad',
+                                        fontWeight: FontWeight.w600,
                                         //color:  ? Colors.green : Colors.grey[600],
                                       ),
                                     ),
@@ -169,7 +172,11 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Details"),
+        title: const Text(
+          "Details",
+          style: TextStyle(
+              fontFamily: 'Afacad', fontSize: 28, fontWeight: FontWeight.w600),
+        ),
         actions: [
           status
               ? Padding(
@@ -219,50 +226,55 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
                     children: [
                       Expanded(
                         child: Card(
+                            color: const Color.fromARGB(255, 250, 220, 255),
                             child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Student Profile Details',
-                                style: TextStyle(fontSize: 20),
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 10.0),
+                                  Text(
+                                    "Student Name: $studentName",
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      fontFamily: 'Afacad',
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10.0),
+                                  Text(
+                                    "Enrollment No: $enrollmentNo",
+                                    style: const TextStyle(
+                                        fontSize: 22, fontFamily: "Afacad"),
+                                  ),
+                                  const SizedBox(height: 10.0),
+                                  Text(
+                                    "Height: $height",
+                                    style: const TextStyle(
+                                        fontSize: 22, fontFamily: 'Afacad'),
+                                  ),
+                                  const SizedBox(height: 10.0),
+                                  Text(
+                                    "Weight: $weight",
+                                    style: const TextStyle(
+                                        fontSize: 22, fontFamily: 'Afacad'),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 10.0),
-                              Text(
-                                "Name: $studentName",
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              const SizedBox(height: 10.0),
-                              Text(
-                                "Enrollment No: $enrollmentNo",
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              const SizedBox(height: 10.0),
-                              Text(
-                                "Height: $height",
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              const SizedBox(height: 10.0),
-                              Text(
-                                "Weight: $weight",
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        )),
+                            )),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50.0),
+                  const SizedBox(height: 40.0),
                   Text(
                     'Title : $title',
-                    style: const TextStyle(fontSize: 20.0),
+                    style:
+                        const TextStyle(fontSize: 26.0, fontFamily: 'Afacad'),
                   ),
                   const SizedBox(height: 20.0),
                   Text(
                     'Issue Description : $description',
-                    style: const TextStyle(fontSize: 20.0),
+                    style:
+                        const TextStyle(fontSize: 24.0, fontFamily: 'Afacad'),
                   ),
                   const SizedBox(height: 30.0),
                   TextFormField(
