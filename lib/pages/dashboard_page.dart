@@ -266,56 +266,57 @@ class _MedicalRecordDetailsState extends State<MedicalRecordDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Details"),
-        actions: [
-          status
-              ? Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
+        appBar: AppBar(
+          title: const Text("Details"),
+          actions: [
+            status
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                        onTap: () {
+                          widget.issue.reference.update({'status': false});
+                        },
+                        child: const Text(
+                          "Close Issue",
+                          style: TextStyle(fontSize: 18.0, color: Colors.red),
+                        )))
+                : Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
                       onTap: () {
-                        widget.issue.reference.update({'status': false});
+                        Navigator.pop(context);
                       },
-                      child: const Text(
-                        "Close Issue",
-                        style: TextStyle(fontSize: 18.0, color: Colors.red),
-                      )))
-              : Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.close,
-                      size: 26.0,
+                      child: const Icon(
+                        Icons.close,
+                        size: 26.0,
+                      ),
                     ),
                   ),
-                ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Symptoms: ${description}',
-              style: const TextStyle(fontSize: 20.0),
-            ),
-            const SizedBox(height: 20.0),
-            Text(
-              'Ongoing: ${status}',
-              style: const TextStyle(fontSize: 20.0),
-            ),
-            const SizedBox(height: 20.0),
-            Text(
-              'Doctor Replied: ${doctorReply}',
-              style: const TextStyle(fontSize: 20.0),
-            ),
           ],
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Title : $title',
+                style: const TextStyle(fontSize: 28.0, fontFamily: 'Afacad'),
+              ),
+              const SizedBox(height: 20.0),
+              Text(
+                'Issue Description : $description',
+                style: const TextStyle(fontSize: 24.0, fontFamily: 'Afacad'),
+              ),
+              const SizedBox(height: 30.0),
+              Text(
+                'Doctor Reply : $doctorReply',
+                style: const TextStyle(fontSize: 24.0, fontFamily: 'Afacad'),
+              ),
+            ],
+          ),
+        ));
   }
 }
 
