@@ -63,13 +63,15 @@ class _ProfilePageState extends State<ProfilePage> {
               String bloodGroup = data['profile']['bloodGroup'] ?? '';
               String allergies = data['profile']['allergies'] ?? '';
               String medicalHistory = data['profile']['medicalRecord'] ?? '';
+              String sex = data['profile']['sex'] ?? '';
 
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     const Center(
                       child: CircleAvatar(
-                        // backgroundImage: AssetImage(profileImage),
+                        backgroundImage:
+                            AssetImage('assets/images/dummy_profile.jpg'),
                         radius: 65.0,
                       ),
                     ),
@@ -113,10 +115,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           const Divider(color: Colors.grey, thickness: 1.0),
+                          ProfileList(text: sex, icon: Icons.person_outline),
                           ProfileList(
-                              text: height, icon: Icons.height_outlined),
+                              text: "$height cm", icon: Icons.height_outlined),
                           ProfileList(
-                              text: weight,
+                              text: "$weight kg",
                               icon: Icons.fitness_center_outlined),
                           ProfileList(
                               text: bloodGroup, icon: Icons.bloodtype_outlined),

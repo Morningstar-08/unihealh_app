@@ -38,19 +38,44 @@ class _LoginPageState extends State<LoginPage> {
     User? user = await _auth.signInwithEmailAndPassword(email, password);
 
     if (user != null) {
-      print(user.uid);
       String? userType = await DatabaseService().getUserType();
       if (userType == "student") {
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const MainPage()));
       } else if (userType == "doctor") {
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const DoctorDashboard()));
       } else {
-        print("Error signing in");
+        AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Error signing up'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+        //print("Error signing in");
       }
     } else {
-      print("Error signing in");
+      AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Error signing up'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      );
+      //print("Error signing in");
     }
   }
 
